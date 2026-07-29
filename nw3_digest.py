@@ -4,12 +4,14 @@ NW3 News Digest Agent
 ----------------------
 Loops over a set of NW3-area search queries (Hampstead, Belsize Park,
 Swiss Cottage, etc.), pulls recent news via Google News RSS, filters out
-anything already seen, and appends new items to digest.md.
+anything already seen, and rebuilds index.html so it can be served as a
+GitHub Pages homepage.
 
 Designed to be run once per invocation (e.g. by a GitHub Actions cron
 schedule) rather than looping forever with a sleep() call.
 """
 
+import html
 import json
 import os
 import urllib.parse
@@ -27,12 +29,13 @@ QUERIES = [
     "Hampstead Heath",
 ]
 
-STATE_FILE = "seen.json"
-DIGEST_FILE = "digest.md"
+ITEMS_FILE = "items.json"       # full history, used as both state + page data
+HTML_FILE = "index.html"        # rebuilt fresh every run
 MAX_ITEMS_PER_QUERY = 8
+MAX_ITEMS_ON_PAGE = 150          # keep the page from growing forever
 
 
-# --- Core functions ---------------------------------------------------------
+# --- Fetching ---------------------------------------------------------------
 
 def fetch_news(query: str) -> list[dict]:
     """Fetch a Google News RSS feed for a query and parse entries."""
@@ -66,52 +69,162 @@ def fetch_news(query: str) -> list[dict]:
                 "pub_date": pub_date,
                 "source": source,
                 "query": query,
+                "seen_at": datetime.now(timezone.utc).isoformat(),
             })
     return items
 
 
-def load_seen() -> set[str]:
-    if not os.path.exists(STATE_FILE):
-        return set()
-    with open(STATE_FILE, "r") as f:
-        return set(json.load(f))
+# --- State (also doubles as the page's data source) -------------------------
+
+def load_items() -> list[dict]:
+    if not os.path.exists(ITEMS_FILE):
+        return []
+    with open(ITEMS_FILE, "r") as f:
+        return json.load(f)
 
 
-def save_seen(seen: set[str]) -> None:
-    with open(STATE_FILE, "w") as f:
-        json.dump(sorted(seen), f, indent=2)
+def save_items(items: list[dict]) -> None:
+    with open(ITEMS_FILE, "w") as f:
+        json.dump(items, f, indent=2)
 
 
-def append_digest(new_items: list[dict]) -> None:
-    if not new_items:
-        return
-    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    lines = [f"\n## {timestamp}\n"]
-    for item in new_items:
-        lines.append(f"- **[{item['title']}]({item['link']})** — {item['source']} ({item['query']})")
-    with open(DIGEST_FILE, "a") as f:
-        f.write("\n".join(lines) + "\n")
+# --- HTML page generation ----------------------------------------------------
+
+PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NW3 News Digest</title>
+<style>
+  :root {{
+    color-scheme: light dark;
+  }}
+  body {{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+    background: #0f1115;
+    color: #e7e9ec;
+    line-height: 1.5;
+  }}
+  header {{
+    margin-bottom: 24px;
+  }}
+  h1 {{
+    font-size: 1.6rem;
+    margin: 0 0 4px;
+  }}
+  .subtitle {{
+    color: #9aa1ab;
+    font-size: 0.9rem;
+  }}
+  .item {{
+    padding: 14px 0;
+    border-bottom: 1px solid #232630;
+  }}
+  .item:last-child {{
+    border-bottom: none;
+  }}
+  .item a {{
+    color: #7cb3ff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.02rem;
+  }}
+  .item a:hover {{
+    text-decoration: underline;
+  }}
+  .meta {{
+    color: #9aa1ab;
+    font-size: 0.82rem;
+    margin-top: 4px;
+  }}
+  .tag {{
+    display: inline-block;
+    background: #1c2431;
+    color: #8fb8ff;
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    font-size: 0.75rem;
+  }}
+  footer {{
+    margin-top: 32px;
+    color: #6b7280;
+    font-size: 0.8rem;
+    text-align: center;
+  }}
+</style>
+</head>
+<body>
+<header>
+  <h1>NW3 News Digest</h1>
+  <div class="subtitle">Hampstead · Belsize Park · Swiss Cottage — last updated {updated}</div>
+</header>
+<main>
+{items_html}
+</main>
+<footer>Generated automatically by a GitHub Actions cron job.</footer>
+</body>
+</html>
+"""
+
+ITEM_TEMPLATE = """<div class="item">
+  <a href="{link}" target="_blank" rel="noopener">{title}</a>
+  <div class="meta">{source}{pub_date}<span class="tag">{query}</span></div>
+</div>"""
 
 
-# --- Main loop iteration ----------------------------------------------------
+def render_html(items: list[dict]) -> str:
+    # newest first
+    items_sorted = sorted(items, key=lambda i: i.get("seen_at", ""), reverse=True)
+    items_sorted = items_sorted[:MAX_ITEMS_ON_PAGE]
+
+    blocks = []
+    for item in items_sorted:
+        pub = f" · {html.escape(item['pub_date'])}" if item.get("pub_date") else ""
+        blocks.append(ITEM_TEMPLATE.format(
+            link=html.escape(item["link"]),
+            title=html.escape(item["title"]),
+            source=html.escape(item.get("source", "")),
+            pub_date=pub,
+            query=html.escape(item.get("query", "")),
+        ))
+
+    items_html = "\n".join(blocks) if blocks else "<p>No items yet.</p>"
+    updated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    return PAGE_TEMPLATE.format(updated=updated, items_html=items_html)
+
+
+def save_html(content: str) -> None:
+    with open(HTML_FILE, "w") as f:
+        f.write(content)
+
+
+# --- Main run ----------------------------------------------------------------
 
 def run_once() -> None:
-    seen = load_seen()
-    new_items = []
+    existing = load_items()
+    seen_links = {item["link"] for item in existing}
 
+    new_items = []
     for query in QUERIES:
         print(f"Checking: {query}")
         for item in fetch_news(query):
-            if item["link"] not in seen:
+            if item["link"] not in seen_links:
                 new_items.append(item)
-                seen.add(item["link"])
+                seen_links.add(item["link"])
 
     if new_items:
         print(f"Found {len(new_items)} new item(s).")
-        append_digest(new_items)
-        save_seen(seen)
+        existing.extend(new_items)
     else:
         print("No new items this run.")
+
+    save_items(existing)
+    save_html(render_html(existing))
 
 
 if __name__ == "__main__":
