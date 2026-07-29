@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
-<meta name="description" content="NW3 News — a running digest of Hampstead, Belsize Park and Swiss Cottage news.">
+<meta name="description" content="NW3 News - a daily Hampstead, Belsize Park and Swiss Cottage briefing.">
 <title>NW3 News &mdash; Hampstead briefing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,11 +23,7 @@
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
 * { box-sizing: border-box; }
-html {
-  color-scheme: light;
-  background: var(--paper);
-  scroll-behavior: smooth;
-}
+html { color-scheme: light; scroll-behavior: smooth; background: var(--paper); }
 body {
   margin: 0;
   color: var(--ink);
@@ -37,17 +33,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; }
-a, button { -webkit-tap-highlight-color: transparent; }
+button, a { -webkit-tap-highlight-color: transparent; }
 
-.shell {
-  width: min(100%, 1060px);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-.masthead {
-  padding-top: clamp(26px, 6vw, 54px);
-  text-align: center;
-}
+.shell { width: min(100%, 1060px); margin: 0 auto; padding: 0 var(--gutter); }
+
+.masthead { padding-top: clamp(26px, 6vw, 54px); text-align: center; }
 .brand {
   margin: 0;
   font-family: var(--serif);
@@ -65,50 +55,101 @@ a, button { -webkit-tap-highlight-color: transparent; }
   letter-spacing: .22em;
   text-transform: uppercase;
 }
-.issue-line .dot {
-  padding: 0 .42em;
-  color: var(--accent);
-}
-.strap {
+.issue-line .dot { padding: 0 .42em; color: var(--accent); }
+
+.date-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-block: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: blur(12px);
 }
-.strap div {
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 8px;
+.date-tab {
+  position: relative;
+  min-height: 58px;
+  border: 0;
+  padding: 8px 6px;
   color: var(--muted);
-  font-size: clamp(10px, 2.6vw, 12px);
-  font-weight: 600;
-  letter-spacing: .16em;
-  text-transform: uppercase;
+  background: transparent;
+  font: 500 clamp(12px, 3.2vw, 16px)/1.1 var(--sans);
+  cursor: pointer;
 }
-.strap div + div { border-left: 1px solid var(--rule); }
-.strap strong {
-  color: var(--ink);
-  font-weight: 700;
+.date-tab::after {
+  position: absolute;
+  right: 17%;
+  bottom: -1px;
+  left: 17%;
+  height: 4px;
+  background: var(--accent);
+  content: "";
+  opacity: 0;
+  transform: scaleX(.45);
+  transition: opacity 180ms ease, transform 280ms var(--ease);
+}
+.date-tab[aria-selected="true"] { color: var(--ink); font-weight: 700; }
+.date-tab[aria-selected="true"]::after { opacity: 1; transform: scaleX(1); }
+.date-tab:focus-visible, .source-link:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  outline-offset: -3px;
 }
 
 main { min-height: 60vh; }
 
-.story {
-  padding: 22px 0 24px;
+.morning { margin-top: 28px; border-block: 2px solid var(--ink); }
+.morning-title {
+  margin: 0;
+  padding: 11px 0 9px;
   border-bottom: 1px solid var(--rule);
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
 }
-.story:first-of-type { padding-top: 28px; }
+.morning-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.morning-fact {
+  min-width: 0;
+  padding: 13px 10px 12px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--serif);
+  font-size: clamp(19px, 5.3vw, 24px);
+  line-height: 1.1;
+}
+.morning-fact:nth-child(even) { padding-left: 14px; border-left: 1px solid var(--rule); }
+.morning-fact small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.briefing { animation: reveal 460ms var(--ease) both; }
+.briefing[hidden] { display: none; }
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.story { padding: 24px 0 27px; border-bottom: 1px solid var(--rule); }
+.story:first-of-type { padding-top: 30px; }
 .story-index {
   display: inline-block;
   margin-right: 10px;
   color: var(--accent);
   font-family: var(--serif);
-  font-size: clamp(30px, 8vw, 40px);
+  font-size: clamp(35px, 10vw, 48px);
   line-height: .8;
   vertical-align: -.12em;
 }
 .section-label {
+  margin: 0;
   color: var(--green);
   font-size: 11px;
   font-weight: 800;
@@ -118,10 +159,10 @@ main { min-height: 60vh; }
 .story h2 {
   margin: 10px 0 0;
   font-family: var(--serif);
-  font-size: clamp(26px, 6.4vw, 40px);
+  font-size: clamp(30px, 8.4vw, 48px);
   font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: -.024em;
+  line-height: .99;
+  letter-spacing: -.028em;
 }
 .story h2 a { text-decoration: none; }
 .story h2 a:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -130,33 +171,43 @@ main { min-height: 60vh; }
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 12px;
-  margin-top: 13px;
+  margin-top: 14px;
   color: #30302d;
   font-size: 13px;
   font-weight: 700;
 }
-.story-source {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-.story-source::before {
+.story-location { display: inline-flex; align-items: center; gap: 7px; }
+.story-location::before {
   width: 7px;
   height: 7px;
   border: 2px solid var(--green);
   border-radius: 50%;
   content: "";
 }
-.story-date {
-  color: var(--muted);
-  font-weight: 600;
+.action-label {
+  padding: 4px 8px 3px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
+.story-date { color: var(--muted); font-weight: 600; }
+.story-body {
+  margin-top: 14px;
+  font-size: clamp(18px, 5vw, 20px);
+  line-height: 1.5;
+}
+.story-body p { margin: 0 0 9px; }
+.story-body strong { font-weight: 700; }
+
 .source-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px 16px;
-  margin-top: 14px;
+  margin-top: 15px;
   font-size: 12px;
   font-weight: 600;
 }
@@ -175,16 +226,8 @@ main { min-height: 60vh; }
   content: "";
   transform: rotate(45deg);
 }
-.source-link:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 34%, transparent);
-  outline-offset: 3px;
-}
 
-.empty {
-  padding: 40px 0;
-  font-family: var(--serif);
-  font-size: 22px;
-}
+.empty { padding: 44px 0; font-family: var(--serif); font-size: 22px; }
 
 .issue-footer {
   padding: 30px 0 12px;
@@ -194,28 +237,46 @@ main { min-height: 60vh; }
   letter-spacing: .22em;
   text-transform: uppercase;
 }
-.site-footer {
-  margin: 8px 0 44px;
-  border-block: 1px solid var(--rule);
-}
+.site-footer { margin: 8px 0 44px; border-block: 1px solid var(--rule); }
 .site-footer p {
   margin: 0;
-  padding: 18px 0;
+  padding: 20px 0;
   text-align: center;
   color: var(--muted);
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: .18em;
+  letter-spacing: .2em;
   text-transform: uppercase;
 }
 
 @media (min-width: 720px) {
-  .strap { grid-template-columns: repeat(4, 1fr); }
-  .story { padding: 26px 0 28px; }
+  .morning {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .morning-title {
+    display: flex;
+    align-items: center;
+    min-width: 145px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 0;
+    padding-right: 24px;
+  }
+  .morning-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .morning-fact {
+    display: block;
+    padding: 12px 14px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 0;
+    font-size: 17px;
+  }
+  .morning-fact:nth-child(even) { border-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
 }
@@ -225,522 +286,620 @@ main { min-height: 60vh; }
 <div class="shell">
   <header class="masthead">
     <p class="brand">NW3 NEWS</p>
-    <p class="issue-line">Hampstead <span class="dot">&bull;</span> Belsize Park <span class="dot">&bull;</span> Swiss Cottage</p>
-    <div class="strap">
-      <div>Updated <strong>29 Jul 2026, 20:26 UTC</strong></div>
-      <div>Stories <strong>46</strong></div>
-      <div>Sources <strong>Google News</strong></div>
-      <div>Cadence <strong>Daily</strong></div>
-    </div>
+    <p class="issue-line">London <span class="dot">&bull;</span> Wednesday 29 July 2026</p>
+    <nav class="date-nav" aria-label="Choose briefing date" role="tablist">
+      <button class="date-tab" id="tab-today" role="tab" aria-controls="today" aria-selected="true" data-day="today">Today 29 July</button>
+      <button class="date-tab" id="tab-yesterday" role="tab" aria-controls="yesterday" aria-selected="false" data-day="yesterday">Yesterday</button>
+      <button class="date-tab" id="tab-day-before" role="tab" aria-controls="day-before" aria-selected="false" data-day="day-before">Earlier</button>
+    </nav>
   </header>
 
   <main>
-    <article class="story">
-      <p class="section-label"><span class="story-index">01</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPVndOYzlXWmhxbG1QOFRlRDBDM1NoQy0xOTM4c244bXJhZnBWT1JVTDFjVHctMEVOUXJJWE5aSWpkRDVDTFhUckZDN2tLRnJhWU1vVnoyNG9FSzRSSDhFS0dtNThFem1SQ1pVMHhnMFpKVUd4WjZpZGtVUlhsYmZ1cDlmbHlrZHp2?oc=5" target="_blank" rel="noopener noreferrer">Developer in bid to build rooftop extension to create new flats on top of block</a></h2>
-      <div class="story-meta">
-        <span class="story-source">London Now</span>
-        <span class="story-date">Sat 09 August 2025</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPVndOYzlXWmhxbG1QOFRlRDBDM1NoQy0xOTM4c244bXJhZnBWT1JVTDFjVHctMEVOUXJJWE5aSWpkRDVDTFhUckZDN2tLRnJhWU1vVnoyNG9FSzRSSDhFS0dtNThFem1SQ1pVMHhnMFpKVUd4WjZpZGtVUlhsYmZ1cDlmbHlrZHp2?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">02</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9DVTBJc3E2SnpRN1ZtWkVSWXh3QmN3ckZ5SlltM3lwa3l4aXlwTjRmUDNYc3lDMGV6RkpOSy0xZ0RwdjRoTTlxdGJOS1NmYmQ0UjFOamJ1N2VvUDA4?oc=5" target="_blank" rel="noopener noreferrer">Keep Hampstead ponds open to trans swimmers, City of London says</a></h2>
-      <div class="story-meta">
-        <span class="story-source">BBC</span>
-        <span class="story-date">Mon 27 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9DVTBJc3E2SnpRN1ZtWkVSWXh3QmN3ckZ5SlltM3lwa3l4aXlwTjRmUDNYc3lDMGV6RkpOSy0xZ0RwdjRoTTlxdGJOS1NmYmQ0UjFOamJ1N2VvUDA4?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">03</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNZlJVSkF0bDZtRS0zRERyS1VIU01FTDVyMnVNQlVCUFJhaGZoQkhVbVIzZHdNY0hIVFE0WTJjNzhRSDVHYmhmU3ZsQVJSOElWSjJuZl94cjk4T3Y2aDZNdlIxOEVNVW1MV2xfTm12LWVQR2VrTEFVNW1zekhNeFdoTjFjMkdHTG5sbEFnUlZUT01EM1FmcEMtQQ?oc=5" target="_blank" rel="noopener noreferrer">Three London schools shortlisted for World&#x27;s Best School prize – the most of any city in the world</a></h2>
-      <div class="story-meta">
-        <span class="story-source">standard.co.uk</span>
-        <span class="story-date">Thu 25 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNZlJVSkF0bDZtRS0zRERyS1VIU01FTDVyMnVNQlVCUFJhaGZoQkhVbVIzZHdNY0hIVFE0WTJjNzhRSDVHYmhmU3ZsQVJSOElWSjJuZl94cjk4T3Y2aDZNdlIxOEVNVW1MV2xfTm12LWVQR2VrTEFVNW1zekhNeFdoTjFjMkdHTG5sbEFnUlZUT01EM1FmcEMtQQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">04</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOQzJGamVPeVBaUGFYcXFBNnkzTmN5ZGFpZ2diTGdfODVOdFNYdUJnU0RGTUJHNkpKeHlPWWdRcGp3a3hwSmlMNUE2bVFneTBJWi02cTlseWxCZXpIZWdBS2pSdFMxMk5aY0NPNnRRRVQ4dTlaTVJnSXNrbWZ3eS12NS1uM2xwcTYxSWpR?oc=5" target="_blank" rel="noopener noreferrer">Harry Styles congratulates London school on &#x27;amazing achievement&#x27; as it is shortlisted in global education prize</a></h2>
-      <div class="story-meta">
-        <span class="story-source">lbc.co.uk</span>
-        <span class="story-date">Thu 25 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOQzJGamVPeVBaUGFYcXFBNnkzTmN5ZGFpZ2diTGdfODVOdFNYdUJnU0RGTUJHNkpKeHlPWWdRcGp3a3hwSmlMNUE2bVFneTBJWi02cTlseWxCZXpIZWdBS2pSdFMxMk5aY0NPNnRRRVQ4dTlaTVJnSXNrbWZ3eS12NS1uM2xwcTYxSWpR?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">05</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUFtV0FWNVJJRnNJb2dwX1AzNkhwZzFrU1YwN1ZVRmdxSTlWUGhxbEU2N0xncFYtdzJjYWhkWUhia2tuVktjZlZrelVMQW03aWxlSHk3NENkc3pxYXliT21NQzhoN1dBX3RiNzFseDlWTDd4MHdidVJFYldjWFlqNEF4TGRsWURWeUcw?oc=5" target="_blank" rel="noopener noreferrer">The north London cafe that became &#x27;a sanctuary&#x27; for those fleeing Nazi Europe</a></h2>
-      <div class="story-meta">
-        <span class="story-source">London Now</span>
-        <span class="story-date">Sun 19 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUFtV0FWNVJJRnNJb2dwX1AzNkhwZzFrU1YwN1ZVRmdxSTlWUGhxbEU2N0xncFYtdzJjYWhkWUhia2tuVktjZlZrelVMQW03aWxlSHk3NENkc3pxYXliT21NQzhoN1dBX3RiNzFseDlWTDd4MHdidVJFYldjWFlqNEF4TGRsWURWeUcw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">06</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE1uUHR2UUFNRjFGUFNkREd3Rl9PUk96VlpmTG1xeVJkUUl5dFc1aklhbFo0V2pqMkZaRVR5d1lJekpBOEtmQldCM1lZd2pvRnlpcThLNjVoZC0zYS0zcE9lclRubGZUcFBX?oc=5" target="_blank" rel="noopener noreferrer">Belsize Park Air Quality Index (AQI) and United Kingdom Air Pollution</a></h2>
-      <div class="story-meta">
-        <span class="story-source">IQAir</span>
-        <span class="story-date">Wed 24 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE1uUHR2UUFNRjFGUFNkREd3Rl9PUk96VlpmTG1xeVJkUUl5dFc1aklhbFo0V2pqMkZaRVR5d1lJekpBOEtmQldCM1lZd2pvRnlpcThLNjVoZC0zYS0zcE9lclRubGZUcFBX?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">07</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE5RaEh6bFpTMWNneXp5TTU2NFBzSHpvZ2xTVnczRkVaVDhPTU45MGhub0phLXlvV3RsY1hHczJ4OFo0UjByS21wXzRaUzN5R2VtbVNLM1RuSzNjUQ?oc=5" target="_blank" rel="noopener noreferrer">When London&#x27;s Hampstead Heath hosted a ski jumping competition</a></h2>
-      <div class="story-meta">
-        <span class="story-source">BBC</span>
-        <span class="story-date">Sat 03 January 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE5RaEh6bFpTMWNneXp5TTU2NFBzSHpvZ2xTVnczRkVaVDhPTU45MGhub0phLXlvV3RsY1hHczJ4OFo0UjByS21wXzRaUzN5R2VtbVNLM1RuSzNjUQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">08</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxOS1JJVWZ1WVZBSDF4MGdPa01VM3pxc01JekliaXNxekFPMEpSd2RPcm1uMUJ3VVpmTFhXQ3M0emY3aHlzWkw1NkZhRVdTYTZRd0dkdXdfY0E4WUZPNm1LNnVpVlRNLXQ3V0JHWDB1OWlvSnhPRkhoN1NkcldwSWFwbTdXaFFKYWdsNXhUWVVsSDR0a1hQTXM1VEJiZWp0RmFUREZJZ05VYmozU09jblNJLWF3?oc=5" target="_blank" rel="noopener noreferrer">London-based guesthouse Mason &amp; Fifth to launch fourth site in Belsize Park</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Estates Gazette</span>
-        <span class="story-date">Fri 20 February 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMisgFBVV95cUxOS1JJVWZ1WVZBSDF4MGdPa01VM3pxc01JekliaXNxekFPMEpSd2RPcm1uMUJ3VVpmTFhXQ3M0emY3aHlzWkw1NkZhRVdTYTZRd0dkdXdfY0E4WUZPNm1LNnVpVlRNLXQ3V0JHWDB1OWlvSnhPRkhoN1NkcldwSWFwbTdXaFFKYWdsNXhUWVVsSDR0a1hQTXM1VEJiZWp0RmFUREZJZ05VYmozU09jblNJLWF3?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">09</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNS0piNFFJU01MSHhzaTJ6SENkVFZSX0szdmc4blF2NHVNUThBcDB5RlFBbG4tSFVhNnBxRGRvelBEcTZ2dEVUYXc1TFZ2SDJOTm9sOF9OaGhQLXVfT0JPREFTNjNFNko0S0NaODU1b3lkVG5uNDlKZThIdldxRlpMSGtMcHV6VjF3X3hz0gGQAUFVX3lxTE43MlVPZ01WWFhMZHlfQWhxZWJvN01DOV9mNk1YRnRhdDVZZms1dzB6YnQxdWI3SkZ1cnY5cHBNbkRsVUJwSnRYaUU2SXRxV2ZXbEpuOU1SWXo5VWVMYVJ3WGZZQzdRR1FMODZfc0ZOVWxKaE54OHlQRm90WlBtTXY3dU45dkl0dnJlTjNuYlRXeA?oc=5" target="_blank" rel="noopener noreferrer">GMB Union members working in roles from Tower Bridge to Hampstead Heath reject pay offer</a></h2>
-      <div class="story-meta">
-        <span class="story-source">My London</span>
-        <span class="story-date">Fri 17 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNS0piNFFJU01MSHhzaTJ6SENkVFZSX0szdmc4blF2NHVNUThBcDB5RlFBbG4tSFVhNnBxRGRvelBEcTZ2dEVUYXc1TFZ2SDJOTm9sOF9OaGhQLXVfT0JPREFTNjNFNko0S0NaODU1b3lkVG5uNDlKZThIdldxRlpMSGtMcHV6VjF3X3hz0gGQAUFVX3lxTE43MlVPZ01WWFhMZHlfQWhxZWJvN01DOV9mNk1YRnRhdDVZZms1dzB6YnQxdWI3SkZ1cnY5cHBNbkRsVUJwSnRYaUU2SXRxV2ZXbEpuOU1SWXo5VWVMYVJ3WGZZQzdRR1FMODZfc0ZOVWxKaE54OHlQRm90WlBtTXY3dU45dkl0dnJlTjNuYlRXeA?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">10</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE9wU1hKX3JFODB0TGxDOERtV0Q4Zkw1My1lRklzZ01RZUhxMWJscC1uSGx1dHBNRk1FZm1QRURpRnZpQlFUeDA0WVFOOTZXRWN0dE5XbjlkUy1rcTY4MWpodFlLNUlodENGY2lfY0dHaXBnWk0tSDczUA?oc=5" target="_blank" rel="noopener noreferrer">Hampstead Heath Ponds to remain inclusive</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Good Law Project</span>
-        <span class="story-date">Thu 29 January 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMieEFVX3lxTE9wU1hKX3JFODB0TGxDOERtV0Q4Zkw1My1lRklzZ01RZUhxMWJscC1uSGx1dHBNRk1FZm1QRURpRnZpQlFUeDA0WVFOOTZXRWN0dE5XbjlkUy1rcTY4MWpodFlLNUlodENGY2lfY0dHaXBnWk0tSDczUA?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">11</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOVWdHNG90RUNpX3VhQUNEMi1fMnhVSU5pTVZMTFNUSXdWV25HbGFHRkFfei1jRE9JcnNiZG5seDRxdHkwbElTNTA0MGd2elNIUWNYejV5TlhLdGlTMEpjWWVUb1A1NEVsTjBjQ1Y3T1FUS3pyak56cnlBODB6cllDby04MzRfeGMycG1VSW5WSnJ5RFl5SjB2cWFOakpnT3JLQkZWRw?oc=5" target="_blank" rel="noopener noreferrer">The row at Hampstead Heath is about far more than a few thoughtless swimmers in a heatwave</a></h2>
-      <div class="story-meta">
-        <span class="story-source">The Guardian</span>
-        <span class="story-date">Wed 03 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOVWdHNG90RUNpX3VhQUNEMi1fMnhVSU5pTVZMTFNUSXdWV25HbGFHRkFfei1jRE9JcnNiZG5seDRxdHkwbElTNTA0MGd2elNIUWNYejV5TlhLdGlTMEpjWWVUb1A1NEVsTjBjQ1Y3T1FUS3pyak56cnlBODB6cllDby04MzRfeGMycG1VSW5WSnJ5RFl5SjB2cWFOakpnT3JLQkZWRw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">12</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9yNGhzczVTdXQxMmNSZWtPRjRoTVRhOGRYalZxYzluemlneFNVVGZQWll0RXlkR3dfLXR1WUdQT1A4TlE4WVNpaGNEMFpEMGRrMXNzQUdRaFh6WDAw?oc=5" target="_blank" rel="noopener noreferrer">&#x27;Appalling behaviour&#x27; near swans in Hampstead Heath pond criticised</a></h2>
-      <div class="story-meta">
-        <span class="story-source">BBC</span>
-        <span class="story-date">Wed 27 May 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9yNGhzczVTdXQxMmNSZWtPRjRoTVRhOGRYalZxYzluemlneFNVVGZQWll0RXlkR3dfLXR1WUdQT1A4TlE4WVNpaGNEMFpEMGRrMXNzQUdRaFh6WDAw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">13</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQQ01wNlZDRVVDUWk2WlB6VkxucGNpSUtuanpRbDJMWWVZXzQ5T0Q5QjYxMlVOXzNpejAyMXRsMS1KYnoyeTJHNkdoVnRDMVl0bnBSR0VHem1vOE1CRnBqekd0SjdmN2lZZTlBTEl2aFpGa1BGMURYZ2JjbUVLaUc2aFZpcw?oc=5" target="_blank" rel="noopener noreferrer">One taken to hospital after fight breaks out at Hampstead Heath lido</a></h2>
-      <div class="story-meta">
-        <span class="story-source">AOL.co.uk</span>
-        <span class="story-date">Fri 24 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQQ01wNlZDRVVDUWk2WlB6VkxucGNpSUtuanpRbDJMWWVZXzQ5T0Q5QjYxMlVOXzNpejAyMXRsMS1KYnoyeTJHNkdoVnRDMVl0bnBSR0VHem1vOE1CRnBqekd0SjdmN2lZZTlBTEl2aFpGa1BGMURYZ2JjbUVLaUc2aFZpcw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">14</span>The Heath</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxNUjRkOUQ1M0gyajFLd3RSZmEyX0FSWUxMeThWRExuc2V3Tlgtb0VWWks0U1o2bUxwQ2pJODlxZW1YRGVnNUNVa1NPT3g1eHZOcGpKcUlVZE5PcW5qT296UGV4U3FFaUZoNlJjVUw0U29QaEJ1Y0ZZM1phRjE3Q2xIelFmM2Z4SFBneUgzeWtjOWIzQk8tTlpXcWd2dUJJX3pYU0ZV?oc=5" target="_blank" rel="noopener noreferrer">Aussie cafe chain to finally open on Hampstead Heath next week</a></h2>
-      <div class="story-meta">
-        <span class="story-source">HamHigh</span>
-        <span class="story-date">Tue 14 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiowFBVV95cUxNUjRkOUQ1M0gyajFLd3RSZmEyX0FSWUxMeThWRExuc2V3Tlgtb0VWWks0U1o2bUxwQ2pJODlxZW1YRGVnNUNVa1NPT3g1eHZOcGpKcUlVZE5PcW5qT296UGV4U3FFaUZoNlJjVUw0U29QaEJ1Y0ZZM1phRjE3Q2xIelFmM2Z4SFBneUgzeWtjOWIzQk8tTlpXcWd2dUJJX3pYU0ZV?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">15</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxNSXM2WHVXbHZiUVA1WmMzYkQzeGpmaGRVenpvdVF5ZUR5TzVONzI1Z1h0Zms4VW11dnZzTTI3Q3NsWVNrZk5STTJMVUhNU1pjejdvWVhRMHVwQnlobl9RbGRWelB3NGZIMU92eWROMVAwb3F1Znl4RU8ta3pmMmsxOHhVLUxjeWM1V3hBYXVCLTRiRGh2MUgyOUlRS2pyMUZDX0x1TE9mWVQwemFSQ195djhtYXpxS3A3cUp3RWVB?oc=5" target="_blank" rel="noopener noreferrer">The Winch cut ties with controversial tower block development in Swiss Cottage</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Camden New Journal</span>
-        <span class="story-date">Fri 09 January 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMivgFBVV95cUxNSXM2WHVXbHZiUVA1WmMzYkQzeGpmaGRVenpvdVF5ZUR5TzVONzI1Z1h0Zms4VW11dnZzTTI3Q3NsWVNrZk5STTJMVUhNU1pjejdvWVhRMHVwQnlobl9RbGRWelB3NGZIMU92eWROMVAwb3F1Znl4RU8ta3pmMmsxOHhVLUxjeWM1V3hBYXVCLTRiRGh2MUgyOUlRS2pyMUZDX0x1TE9mWVQwemFSQ195djhtYXpxS3A3cUp3RWVB?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">16</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE96SjUydEhfOFR1NDN3eUcyVzJNVVoydDE2cmhQeHhVc1FhYzJXX21kWkpPTC02amJHNV83T3htRC1JUXVCWWk4ZHl1N2poQWZ6YTdZNE5ZclE1a2pzcUF6a3BDUTVCdVdzMTNSX0xYQjFSV2RFcl9IanJwU0E?oc=5" target="_blank" rel="noopener noreferrer">Swiss Cottage welcomes the Library of Things</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Camden Council</span>
-        <span class="story-date">Thu 20 November 2025</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMifEFVX3lxTE96SjUydEhfOFR1NDN3eUcyVzJNVVoydDE2cmhQeHhVc1FhYzJXX21kWkpPTC02amJHNV83T3htRC1JUXVCWWk4ZHl1N2poQWZ6YTdZNE5ZclE1a2pzcUF6a3BDUTVCdVdzMTNSX0xYQjFSV2RFcl9IanJwU0E?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">17</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPLWxPZGlFQ0VITGNVdUNBYnVmQ3N0SU5tT0pkanVtT2dmZDFvSW9ldWhvYzQ2Q2dIamxrQl93VElVNlcyRHhWU0plbnE0OEJfVUY1WExUQksyRUVmRk9FYlBLRW5UWlY5dnlfNTdxOG5wSlIxc0tYM0tqb1F1aFV1YjRzZWlxS2xzM3FxNGpMWWdVSG92emhNZlNIVDYxOEpfeTNyX3g5anJoTkFSLW5yMkJFd1pNVE0?oc=5" target="_blank" rel="noopener noreferrer">Appeal for witness to come forward in robbery investigation – London</a></h2>
-      <div class="story-meta">
-        <span class="story-source">British Transport Police</span>
-        <span class="story-date">Thu 05 February 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPLWxPZGlFQ0VITGNVdUNBYnVmQ3N0SU5tT0pkanVtT2dmZDFvSW9ldWhvYzQ2Q2dIamxrQl93VElVNlcyRHhWU0plbnE0OEJfVUY1WExUQksyRUVmRk9FYlBLRW5UWlY5dnlfNTdxOG5wSlIxc0tYM0tqb1F1aFV1YjRzZWlxS2xzM3FxNGpMWWdVSG92emhNZlNIVDYxOEpfeTNyX3g5anJoTkFSLW5yMkJFd1pNVE0?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">18</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNVXBCNGNrc2lUUXVwTzZRcFlzeWNUTy1fUE9xUHIwekFac1BNWDVMZGt2Ulc5ZUdIOUttQXRwcWF4SHhVYWk3TTFyOTRTUUNkVUxrelV0VmhoNVkzQ3QwVEpKU3REWjNiTXZZVkR4UTBWM2dWUHBVQUV3aHNfcXBCaWw4Z3ZkSGQwXy1rYUVQTVFhbUpmbFVWNmQxR1U0YTJ5bmVnS3dHYXBYRmx4dURrVGVjTUEwUkhZLV96Sg?oc=5" target="_blank" rel="noopener noreferrer">News - Dubai-based developer secures £152m loan for 251 homes in north-west London</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Inside Housing Living</span>
-        <span class="story-date">Thu 30 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNVXBCNGNrc2lUUXVwTzZRcFlzeWNUTy1fUE9xUHIwekFac1BNWDVMZGt2Ulc5ZUdIOUttQXRwcWF4SHhVYWk3TTFyOTRTUUNkVUxrelV0VmhoNVkzQ3QwVEpKU3REWjNiTXZZVkR4UTBWM2dWUHBVQUV3aHNfcXBCaWw4Z3ZkSGQwXy1rYUVQTVFhbUpmbFVWNmQxR1U0YTJ5bmVnS3dHYXBYRmx4dURrVGVjTUEwUkhZLV96Sg?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">19</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQQlZRQWQ5bHBjY2ExWmpGNXNsNmRSUDBPOURQUHl4Z09hdXMydld1RkEwYkJockdtSGFCdC1SOE5JMGpHb0o4TUVlYjBucThrZ25CdVBoT0c1QUVaaG9WUW4yOTcwUVJJRmJaUXRWckxraTlQSXF2WU5zNEo0VUQ3RGlRYklPQ1NMTTczSWk1QQ?oc=5" target="_blank" rel="noopener noreferrer">Arada London secures £152m loan to fund Swiss Cottage resi scheme</a></h2>
-      <div class="story-meta">
-        <span class="story-source">BE News</span>
-        <span class="story-date">Tue 28 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQQlZRQWQ5bHBjY2ExWmpGNXNsNmRSUDBPOURQUHl4Z09hdXMydld1RkEwYkJockdtSGFCdC1SOE5JMGpHb0o4TUVlYjBucThrZ25CdVBoT0c1QUVaaG9WUW4yOTcwUVJJRmJaUXRWckxraTlQSXF2WU5zNEo0VUQ3RGlRYklPQ1NMTTczSWk1QQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">20</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxQejhFY2VJTEx3Y1AwWFBKY3QyeWJBVFBCdnN5ZXNiSzZVNUJkTHpTUUpzRFoyR2xnYzl5Yi1VNl81bGNQY0xoLVFpMURyQ0dSLWNMV09lSS1ucTJzM1Q1YVVRYmtsTTd2UW14TVQtZE5yQ2xVakVNM0tkYVdvTXRTZEhyNjFHZVM4bzdWOGozQ28temtrZUY1aXlfVQ?oc=5" target="_blank" rel="noopener noreferrer">Arada London wins £152m loan to deliver 251 mixed-tenure homes in Swiss Cottage</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Property Week</span>
-        <span class="story-date">Tue 28 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMimwFBVV95cUxQejhFY2VJTEx3Y1AwWFBKY3QyeWJBVFBCdnN5ZXNiSzZVNUJkTHpTUUpzRFoyR2xnYzl5Yi1VNl81bGNQY0xoLVFpMURyQ0dSLWNMV09lSS1ucTJzM1Q1YVVRYmtsTTd2UW14TVQtZE5yQ2xVakVNM0tkYVdvTXRTZEhyNjFHZVM4bzdWOGozQ28temtrZUY1aXlfVQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">21</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSXhPMzlZMHRHQW1OX1p2VlhjMG9YVjd1YzV0alc0NGtXRVAxSUFvellyeThLVWI3SHAtYWJ5R3AwRjRaeWxHZElqbkZGNVI1RGgxNU5oT3B5WTlJRkFTZHpPR2FkYjgxZmI2RTFXXzE2aVFPbmdteU1jNUt3c1pKYklXYTNxMjF6Ukk5cHJqU2xKNjhWcDgxRUlsc25WLVB4VDZpWDktMkZSRGtZTHppcU1XdkQzZFFlSlMyT2VGRU5wMFNDREpJcW5oLUVBNFhqSVZpTmxDdWxMX1FXUHFV?oc=5" target="_blank" rel="noopener noreferrer">The pub that changed me: ‘I bonded with a new group of friends there – and it led to my dream job’</a></h2>
-      <div class="story-meta">
-        <span class="story-source">The Guardian</span>
-        <span class="story-date">Mon 19 January 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSXhPMzlZMHRHQW1OX1p2VlhjMG9YVjd1YzV0alc0NGtXRVAxSUFvellyeThLVWI3SHAtYWJ5R3AwRjRaeWxHZElqbkZGNVI1RGgxNU5oT3B5WTlJRkFTZHpPR2FkYjgxZmI2RTFXXzE2aVFPbmdteU1jNUt3c1pKYklXYTNxMjF6Ukk5cHJqU2xKNjhWcDgxRUlsc25WLVB4VDZpWDktMkZSRGtZTHppcU1XdkQzZFFlSlMyT2VGRU5wMFNDREpJcW5oLUVBNFhqSVZpTmxDdWxMX1FXUHFV?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">22</span>Swiss Cottage</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxQaEN3T3dpY3hrVVQ1QmNoV3g1c09LaXM0cDNGcm9XSDVjZUJUYlVYMkdlTmkwOGViLVN0dmlITlpuT19GUHhlc0xtdjdvUno0MmNRMHp4M1hFMFdlaTFGdnE4TTBTdzZYLW45T0VTR1dCX1VXNThock5DOE9nVDc4dWJvLXdEZkZNWGh3TjJIOGcxYm9j?oc=5" target="_blank" rel="noopener noreferrer">A pub, a plaza and the surprising rich history of Hampstead&#x27;s overlooked neighbour</a></h2>
-      <div class="story-meta">
-        <span class="story-source">HamHigh</span>
-        <span class="story-date">Sun 21 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMilAFBVV95cUxQaEN3T3dpY3hrVVQ1QmNoV3g1c09LaXM0cDNGcm9XSDVjZUJUYlVYMkdlTmkwOGViLVN0dmlITlpuT19GUHhlc0xtdjdvUno0MmNRMHp4M1hFMFdlaTFGdnE4TTBTdzZYLW45T0VTR1dCX1VXNThock5DOE9nVDc4dWJvLXdEZkZNWGh3TjJIOGcxYm9j?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">23</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOOUxfM0g5U0IzQzBjcHFDSndmZ2FTUHhHSHhiclNFN3VudTlwbEJ5ZGFJRFlzNkg2M1FKYXE0Tnh0TFNVdkVyaEJKNkZYRUljYWZSTElYcmlIQnByMHhpT2lfc09QY0dGd3oyZFN3Nm9hRDBPQlNGdEdncnJ1WUFNYjlkU1d2bkdlRjRGc29KWXM1anhPaVVmb2FoRkN0SlE?oc=5" target="_blank" rel="noopener noreferrer">Falling tiles at London&#x27;s crumbling underground stations</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Camden New Journal</span>
-        <span class="story-date">Thu 19 February 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOOUxfM0g5U0IzQzBjcHFDSndmZ2FTUHhHSHhiclNFN3VudTlwbEJ5ZGFJRFlzNkg2M1FKYXE0Tnh0TFNVdkVyaEJKNkZYRUljYWZSTElYcmlIQnByMHhpT2lfc09QY0dGd3oyZFN3Nm9hRDBPQlNGdEdncnJ1WUFNYjlkU1d2bkdlRjRGc29KWXM1anhPaVVmb2FoRkN0SlE?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">24</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE1VS280RHpuNjhJNlBOZjdlWXlvZS1JYkxjZklJUW83bzBzdkdfMGg1Sjh2MXBSZWI1ZXpNSnp5VDhjZG43aTlWdUhxZ3RuYXN6TlY4cGVxTkZwSXpQVjk0SmF5MHdiLS1EODY4Vk1raXdCSHhfYUZ3UkxoNEpkQQ?oc=5" target="_blank" rel="noopener noreferrer">The upmarket suburb loved by celebrities that&#x27;s named after a French phrase</a></h2>
-      <div class="story-meta">
-        <span class="story-source">HamHigh</span>
-        <span class="story-date">Fri 10 October 2025</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMifkFVX3lxTE1VS280RHpuNjhJNlBOZjdlWXlvZS1JYkxjZklJUW83bzBzdkdfMGg1Sjh2MXBSZWI1ZXpNSnp5VDhjZG43aTlWdUhxZ3RuYXN6TlY4cGVxTkZwSXpQVjk0SmF5MHdiLS1EODY4Vk1raXdCSHhfYUZ3UkxoNEpkQQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">25</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxNWG5HTTBhdjBUSkFHYkZqWTc3Zk5SdGM2ZlFrbEtTeUNnMFJLZWJEeExCUlNWZFhFTGtLb1F5OHUydEhoWWduemJYc2NmVGh2TjJnVmFoY3RuQnBNTWdqWW9MY0lCc3RVT3lZSXpuRGF2OWIzQ3psRHRndmlVVnBGVFNPRk1hU1p5ZmNiVXliVnk4bFpwWmpralV0RFprWWhuMjU4X2R5ZWNNU3dlSGRRdDJVLUo?oc=5" target="_blank" rel="noopener noreferrer">A Home Away From Home: Inside Mason &amp; Fifth&#x27;s New Belsize Park Guesthouse</a></h2>
-      <div class="story-meta">
-        <span class="story-source">New Wave Magazine</span>
-        <span class="story-date">Fri 29 May 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMitAFBVV95cUxNWG5HTTBhdjBUSkFHYkZqWTc3Zk5SdGM2ZlFrbEtTeUNnMFJLZWJEeExCUlNWZFhFTGtLb1F5OHUydEhoWWduemJYc2NmVGh2TjJnVmFoY3RuQnBNTWdqWW9MY0lCc3RVT3lZSXpuRGF2OWIzQ3psRHRndmlVVnBGVFNPRk1hU1p5ZmNiVXliVnk4bFpwWmpralV0RFprWWhuMjU4X2R5ZWNNU3dlSGRRdDJVLUo?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">26</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPZV92Yk96UDhRQkFhTW14bERBVHBOM3pCU2lWbjQ2eDlsazJid2tuWDlDNm1OdkdNWFZCVjdYWlF3dWkzUmFwTXl1Qmp6emNiRlJkN2VPLUVyUTkzRHRjSFc3LXcweW9MQ3ZRRkhIT2JHRmFmWHVzQ2ctbWpvRWQteUJ4bjdpYW1hS3JhR3ZBZXVHeENVQzhhU3YzV01FcFd1eDdJ?oc=5" target="_blank" rel="noopener noreferrer">Historic Belsize Park boozer closes but says &#x27;we are moving pubs&#x27;</a></h2>
-      <div class="story-meta">
-        <span class="story-source">London Now</span>
-        <span class="story-date">Fri 15 May 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPZV92Yk96UDhRQkFhTW14bERBVHBOM3pCU2lWbjQ2eDlsazJid2tuWDlDNm1OdkdNWFZCVjdYWlF3dWkzUmFwTXl1Qmp6emNiRlJkN2VPLUVyUTkzRHRjSFc3LXcweW9MQ3ZRRkhIT2JHRmFmWHVzQ2ctbWpvRWQteUJ4bjdpYW1hS3JhR3ZBZXVHeENVQzhhU3YzV01FcFd1eDdJ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">27</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE1jTGlpUTNBU1puMmZXM3p2cFg3YkxTU3RIeEh5dzJhTVZvUm41aWIzRUVkRkNMVm05Wm5aTGZiWXp3eUpFa3RkakVobnB3WTgxSHhuT2ctdUNEVXlCQUMxN1BEaGxiZFZiZXFNSGp6b3Y?oc=5" target="_blank" rel="noopener noreferrer">This Brand New Aparthotel in London Raises the Bar for Small Space Design</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Livingetc</span>
-        <span class="story-date">Tue 23 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE1jTGlpUTNBU1puMmZXM3p2cFg3YkxTU3RIeEh5dzJhTVZvUm41aWIzRUVkRkNMVm05Wm5aTGZiWXp3eUpFa3RkakVobnB3WTgxSHhuT2ctdUNEVXlCQUMxN1BEaGxiZFZiZXFNSGp6b3Y?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">28</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOVHdNVjlCamdJb1ZNQWQ4QjVEc3UzY3BBOUJPaHY0TjN6M3B5VnNBVC1TdHZMMlI4aXlkbi1PVVhfZWVUODdLZWhUVVp2VjBfa0dyNGFNdUU4OGxSamFFMGRXS2czZHctb1JVRWNKdGlWZW0ybmJ3dUhlcUxvVmN6cjFlNkJRcEVlbTBHaGVhWkZTX3RCVmk1bzVOQklnSXNBYmJreUlKWTlpQk4tUUFoTXlPTQ?oc=5" target="_blank" rel="noopener noreferrer">Win a Two-Night Stay at Mason &amp; Fifth Belsize Park With Breakfast and Dinner at Cinder</a></h2>
-      <div class="story-meta">
-        <span class="story-source">London On The Inside</span>
-        <span class="story-date">Wed 20 May 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOVHdNVjlCamdJb1ZNQWQ4QjVEc3UzY3BBOUJPaHY0TjN6M3B5VnNBVC1TdHZMMlI4aXlkbi1PVVhfZWVUODdLZWhUVVp2VjBfa0dyNGFNdUU4OGxSamFFMGRXS2czZHctb1JVRWNKdGlWZW0ybmJ3dUhlcUxvVmN6cjFlNkJRcEVlbTBHaGVhWkZTX3RCVmk1bzVOQklnSXNBYmJreUlKWTlpQk4tUUFoTXlPTQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">29</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPYmZVUzIxWDczX19vSm1raXdnYlZ2Q2RZNDdadGh4Qk8wT0owQm1LeG5WVTZRQ2RMVkRTeUphU0F5VzY5NDFsb3ZQSTRvaVNZX0hiQkRWNnJJMVQwSjlkRzFla1FMWGJiNV9vTHVQWktjQlpOeVFWRXhjRkJUQU9vRGw5WDNNVWE5UTFybHBybC0?oc=5" target="_blank" rel="noopener noreferrer">Mason &amp; Fifth announces new Belsize Park location</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Hotel Designs</span>
-        <span class="story-date">Fri 17 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPYmZVUzIxWDczX19vSm1raXdnYlZ2Q2RZNDdadGh4Qk8wT0owQm1LeG5WVTZRQ2RMVkRTeUphU0F5VzY5NDFsb3ZQSTRvaVNZX0hiQkRWNnJJMVQwSjlkRzFla1FMWGJiNV9vTHVQWktjQlpOeVFWRXhjRkJUQU9vRGw5WDNNVWE5UTFybHBybC0?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">30</span>Belsize Park</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxOd2VlTnczNFJQNjJvNWNDZ2U1ZWlPbVU4U2Y1N3dVXzAycWYySUhpc0t5TVNrcEttcTI1R3I4S3hZVFdCMUZWVU9lakxiYTh2eS1sOEljQzBHekVidS1PN2xsc2JRUDJ5VkJHUUxTZlpETjlPWXoxQlJwb1VuMXctbmViZlNsREXSAYwBQVVfeXFMT0pLWTgtUGMtdmhKaVE5aEZaRnNYa1QzTWtfSUhJZi1kamFWWVhFdk5Ec1ZIN0NCdHB1dEZ6c1lETkF0a1ZMTWVLSnZVd3VQLVRJTXVYRmJtYmRSc21OdjZRME1ROWthMVlSa1RmOGdrN2Nic3hGeFFUMEtaLUlTdjl1WFRuV3cxcU9ESEc?oc=5" target="_blank" rel="noopener noreferrer">The London postcode where buyers can save £232k by moving next door</a></h2>
-      <div class="story-meta">
-        <span class="story-source">My London</span>
-        <span class="story-date">Mon 27 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMihwFBVV95cUxOd2VlTnczNFJQNjJvNWNDZ2U1ZWlPbVU4U2Y1N3dVXzAycWYySUhpc0t5TVNrcEttcTI1R3I4S3hZVFdCMUZWVU9lakxiYTh2eS1sOEljQzBHekVidS1PN2xsc2JRUDJ5VkJHUUxTZlpETjlPWXoxQlJwb1VuMXctbmViZlNsREXSAYwBQVVfeXFMT0pLWTgtUGMtdmhKaVE5aEZaRnNYa1QzTWtfSUhJZi1kamFWWVhFdk5Ec1ZIN0NCdHB1dEZ6c1lETkF0a1ZMTWVLSnZVd3VQLVRJTXVYRmJtYmRSc21OdjZRME1ROWthMVlSa1RmOGdrN2Nic3hGeFFUMEtaLUlTdjl1WFRuV3cxcU9ESEc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">31</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOWFBQbDlQa3dmQnRiVVN2WEVtbDQzdE0yVTVjYkZqdW1uUUFUX3RncGM3RjlhQ3NQVzhGakU4bGZJUlpFZ0hvTGlzMjlrNS16bFlBRk1PRFZSWldsVmxBMGRteGh1S2dveFZXaW9fMGNjSERKemthekNNcUM4MVpnbU13ak9IS3FpVjRsc0NXUXY?oc=5" target="_blank" rel="noopener noreferrer">Grave of Great War soldier from Hampstead identified</a></h2>
-      <div class="story-meta">
-        <span class="story-source">GOV.UK</span>
-        <span class="story-date">Fri 24 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOWFBQbDlQa3dmQnRiVVN2WEVtbDQzdE0yVTVjYkZqdW1uUUFUX3RncGM3RjlhQ3NQVzhGakU4bGZJUlpFZ0hvTGlzMjlrNS16bFlBRk1PRFZSWldsVmxBMGRteGh1S2dveFZXaW9fMGNjSERKemthekNNcUM4MVpnbU13ak9IS3FpVjRsc0NXUXY?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">32</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiV0FVX3lxTFBER1NyZTk2ZXY3OExQQkh0ZnlPRzI5ZUh1d21CWm96aGFCcVZsNEZqSXJXQjNOSDc4Mkp2MjFyUTJvSEZRVzF3ZlRvNzY2SUJvc1RVM2xxMA?oc=5" target="_blank" rel="noopener noreferrer">One Day in Hampstead: Hidden Gems in London’s Leafy Village</a></h2>
-      <div class="story-meta">
-        <span class="story-source">solosophie.com</span>
-        <span class="story-date">Wed 01 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiV0FVX3lxTFBER1NyZTk2ZXY3OExQQkh0ZnlPRzI5ZUh1d21CWm96aGFCcVZsNEZqSXJXQjNOSDc4Mkp2MjFyUTJvSEZRVzF3ZlRvNzY2SUJvc1RVM2xxMA?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">33</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPNVZZVk1LR2w5QlZSeEt3a1k3anNtT3hPOHktc2lQWG5QR1JVaDB1ZkJkRElwTWlYMnNDZE45eXJPb3BtYnQyY05IbkpGRTV6OEQ5VzdFWXI4d2xtUlZaZGpxVFhtRnRQUjNfT3FocWpJNTVuQm9ZM2ZJakJvSFJtOTg0NGRHMVBSWU14LURpbVBMd2FMOVhfY3FBYw?oc=5" target="_blank" rel="noopener noreferrer">LIVE updates as North London road blocked due to building fire</a></h2>
-      <div class="story-meta">
-        <span class="story-source">London Now</span>
-        <span class="story-date">Fri 24 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPNVZZVk1LR2w5QlZSeEt3a1k3anNtT3hPOHktc2lQWG5QR1JVaDB1ZkJkRElwTWlYMnNDZE45eXJPb3BtYnQyY05IbkpGRTV6OEQ5VzdFWXI4d2xtUlZaZGpxVFhtRnRQUjNfT3FocWpJNTVuQm9ZM2ZJakJvSFJtOTg0NGRHMVBSWU14LURpbVBMd2FMOVhfY3FBYw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">34</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMi3gFBVV95cUxObnRGWTJWbTJGVEFoVndKUkFOeDRNYlJXUk5pZjNFekhKV2ppTGZUTUMxSVQzMUo5SDdmQW5XQTk0MHdVRlVqVXhHUTgxUEEzWmc4OUxUOEEtTC1ieUh3VEx4UnduZ0RhWmFHQjJ1N2hvMHpBb1Z2LXFVdjU2a0UtY0hsLTQxbXlHZmRkSEdLMDRaejk2ZGxqNUxFWFJzSU8zVkZuemYtUU5pOVRFR3FUZVhpQW5YOGxwMWY4aW1vRUY4TTdHbXh6U1p4WWNzck1wRU16dWduT1RSSWxjQlE?oc=5" target="_blank" rel="noopener noreferrer">Hampstead Heath’s Bathing Ponds to remain trans inclusive spaces as City Corporation agrees future access policy</a></h2>
-      <div class="story-meta">
-        <span class="story-source">City of London Corporation</span>
-        <span class="story-date">Thu 04 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMi3gFBVV95cUxObnRGWTJWbTJGVEFoVndKUkFOeDRNYlJXUk5pZjNFekhKV2ppTGZUTUMxSVQzMUo5SDdmQW5XQTk0MHdVRlVqVXhHUTgxUEEzWmc4OUxUOEEtTC1ieUh3VEx4UnduZ0RhWmFHQjJ1N2hvMHpBb1Z2LXFVdjU2a0UtY0hsLTQxbXlHZmRkSEdLMDRaejk2ZGxqNUxFWFJzSU8zVkZuemYtUU5pOVRFR3FUZVhpQW5YOGxwMWY4aW1vRUY4TTdHbXh6U1p4WWNzck1wRU16dWduT1RSSWxjQlE?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">35</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQYUJ2ZExPLXl1Z3NoYzJzU1E2bHFtV3daZjZ6UHZLS1BsYTFfa2hpV09wdTk3Uk41U1ZwQUxMRzlHem5Ud1F5c0E5NVR3RWhERHNSNWR2SHA4ekllVWdUYU15LWMwcFA4cnVwTC12TzhxU09iQjdYWFg1ekFpcTVCeXZRVXM4OVQw0gGOAUFVX3lxTE13VC0zMXRjNGhPMXpSY3lOT2F5c0phdjVNWGpxc2VGX3ltQ1FMNHBvZmNla0Y3LVRSUS1wTjMybXVvblpoWlJ4WTdSTGFqWFc4c2loX2hZSlRCa2pIZTJsZ0ZPYm5zS0NtbVNmSGI4c3dFSXlvaVF0ZFowNkhBWm5TUWpmY0p3andJZUFvOHc?oc=5" target="_blank" rel="noopener noreferrer">Andy Burnham should show London he cares by funding this one transport project</a></h2>
-      <div class="story-meta">
-        <span class="story-source">My London</span>
-        <span class="story-date">Sun 26 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQYUJ2ZExPLXl1Z3NoYzJzU1E2bHFtV3daZjZ6UHZLS1BsYTFfa2hpV09wdTk3Uk41U1ZwQUxMRzlHem5Ud1F5c0E5NVR3RWhERHNSNWR2SHA4ekllVWdUYU15LWMwcFA4cnVwTC12TzhxU09iQjdYWFg1ekFpcTVCeXZRVXM4OVQw0gGOAUFVX3lxTE13VC0zMXRjNGhPMXpSY3lOT2F5c0phdjVNWGpxc2VGX3ltQ1FMNHBvZmNla0Y3LVRSUS1wTjMybXVvblpoWlJ4WTdSTGFqWFc4c2loX2hZSlRCa2pIZTJsZ0ZPYm5zS0NtbVNmSGI4c3dFSXlvaVF0ZFowNkhBWm5TUWpmY0p3andJZUFvOHc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">36</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOemo4RDhLVXVHSkhsLWw4RUhieThaVG9DRzF0NEJMMkJxMGU4NDhhcW5YdmFZc1JNM1k0NHdFWkU0VExMQUhEYnVZa0FnS0lSMG16d2dyb01NT3BaY0kwV043ZFdKeWx2NGZBakg4cUJzNVM5aVBvRlFheVlkQnF0bGVKa0U2UkluR210bkctcFdzWXlNR1lpelVOMkt3RlA4U0s1SQ?oc=5" target="_blank" rel="noopener noreferrer">Hampstead Heath – how to escape London without leaving</a></h2>
-      <div class="story-meta">
-        <span class="story-source">LSE Blogs</span>
-        <span class="story-date">Wed 15 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOemo4RDhLVXVHSkhsLWw4RUhieThaVG9DRzF0NEJMMkJxMGU4NDhhcW5YdmFZc1JNM1k0NHdFWkU0VExMQUhEYnVZa0FnS0lSMG16d2dyb01NT3BaY0kwV043ZFdKeWx2NGZBakg4cUJzNVM5aVBvRlFheVlkQnF0bGVKa0U2UkluR210bkctcFdzWXlNR1lpelVOMkt3RlA4U0s1SQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">37</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiogFBVV95cUxQX0JhZ3ZQNTRKSWtHNTdlUGk3YTJSWW9lU28zQzBaQTB6eG1vWnFPbHgzMHh3Q1FWeGh4TXh3WHlzOEtLODhMblJqMURMeHREb3JjWFBDcEVxQkxZVjBOc3NiTVZVc3lFNE1VZENsaFJoWWQxYzMxUGV0b191OVlQWUxsRjVma3ZIcWNJb2FKWEhnN0VldkNPdUFIWGxRaksyS0E?oc=5" target="_blank" rel="noopener noreferrer">Part of Hampstead Heath &#x27;bought using cash linked to slave trade&#x27; - report to reveal</a></h2>
-      <div class="story-meta">
-        <span class="story-source">HamHigh</span>
-        <span class="story-date">Tue 28 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiogFBVV95cUxQX0JhZ3ZQNTRKSWtHNTdlUGk3YTJSWW9lU28zQzBaQTB6eG1vWnFPbHgzMHh3Q1FWeGh4TXh3WHlzOEtLODhMblJqMURMeHREb3JjWFBDcEVxQkxZVjBOc3NiTVZVc3lFNE1VZENsaFJoWWQxYzMxUGV0b191OVlQWUxsRjVma3ZIcWNJb2FKWEhnN0VldkNPdUFIWGxRaksyS0E?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">38</span>Hampstead</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxQUVdmVUhQN2dWVEI2ZUh5Z3MyM0hrdWtuYk5GNGRfd3FSZVNvWjFzQ2xXRVV0dmhfSEVoc3RpVWlsclZOU2pEME9GeDVGeUJaYUNxejgwN1UweURTcGdzbGdzT24zV0djb2RPRE4zaVVuUTA1ZjRKNURQZ2NWdXl6RVQ3QWVfbDNwWFcya2dFRjRVblZrX2JlRQ?oc=5" target="_blank" rel="noopener noreferrer">Less Is Margaux | The Natural Hair Group Adds a Third London Salon</a></h2>
-      <div class="story-meta">
-        <span class="story-source">London On The Inside</span>
-        <span class="story-date">Mon 27 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMimAFBVV95cUxQUVdmVUhQN2dWVEI2ZUh5Z3MyM0hrdWtuYk5GNGRfd3FSZVNvWjFzQ2xXRVV0dmhfSEVoc3RpVWlsclZOU2pEME9GeDVGeUJaYUNxejgwN1UweURTcGdzbGdzT24zV0djb2RPRE4zaVVuUTA1ZjRKNURQZ2NWdXl6RVQ3QWVfbDNwWFcya2dFRjRVblZrX2JlRQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">39</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNRUpsYmtDZDlTNHNVNk1LTmxqVHNUZWVWRzhTNWNDNFJKTHVrZFZwVElWbHY4TU9sbzZmYmdYMURaTXhHQ2tueWdDa3lkVEJqTXhaUzR4UnBCc3pVNWYxWHo3dkZ5RVFaQlotaHp0OFZmT2lxWDdybmVwVzM0a3hnTzc5UTBXUQ?oc=5" target="_blank" rel="noopener noreferrer">London’s Alleys: Holly Bush Steps, NW3</a></h2>
-      <div class="story-meta">
-        <span class="story-source">ianVisits</span>
-        <span class="story-date">Mon 07 July 2025</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNRUpsYmtDZDlTNHNVNk1LTmxqVHNUZWVWRzhTNWNDNFJKTHVrZFZwVElWbHY4TU9sbzZmYmdYMURaTXhHQ2tueWdDa3lkVEJqTXhaUzR4UnBCc3pVNWYxWHo3dkZ5RVFaQlotaHp0OFZmT2lxWDdybmVwVzM0a3hnTzc5UTBXUQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">40</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMidkFVX3lxTE05T1pidkkwWTdnNFRMaHVRcVpwakc5RWVzcWt0X2dfZUVhdHZSR3VteDRYY0p2SlhGXzBFdndPekhBLS03d0tTaXZQVXZTblJ5VkpsRkhGRXVrX3U0ZzdaR3pIdldUX2R5XzdSMFJOM1ExNWY1ZkE?oc=5" target="_blank" rel="noopener noreferrer">Moving to NW3</a></h2>
-      <div class="story-meta">
-        <span class="story-source">Zoopla</span>
-        <span class="story-date">Tue 24 January 2017</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMidkFVX3lxTE05T1pidkkwWTdnNFRMaHVRcVpwakc5RWVzcWt0X2dfZUVhdHZSR3VteDRYY0p2SlhGXzBFdndPekhBLS03d0tTaXZQVXZTblJ5VkpsRkhGRXVrX3U0ZzdaR3pIdldUX2R5XzdSMFJOM1ExNWY1ZkE?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">41</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE1OenhfcmU1aGt0dEc5Sm5qTHFOV0JJN0g0TVlMekV6Q1dhczN2WEdKdkFwWkRoeVg2Y2VDV3BVSkp6d0JiYVZDUVI0d2h4Zw?oc=5" target="_blank" rel="noopener noreferrer">NW3</a></h2>
-      <div class="story-meta">
-        <span class="story-source">BBC</span>
-        <span class="story-date">Fri 16 February 2018</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMiTkFVX3lxTE1OenhfcmU1aGt0dEc5Sm5qTHFOV0JJN0g0TVlMekV6Q1dhczN2WEdKdkFwWkRoeVg2Y2VDV3BVSkp6d0JiYVZDUVI0d2h4Zw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">42</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxNVk9sbF9RQzBzU3NlckEwRzJMRG51MVNkOUNyaXE3TmhxZ1RidFdSZHdyLVJxX3NackM0TXAzSnBfNHNrT0VTZ1g1djRvR1ktbFBMczJmRmc2YkduWmFQSEZPTC0wTmFqdU1WcDg4bnVtUWZNU2Fhd2xxemZWdGlwdTZYaTdMZU9PcHhJbzRaMEsxRmpWQlhz?oc=5" target="_blank" rel="noopener noreferrer">Plans for British Museum changes among latest planning applications</a></h2>
-      <div class="story-meta">
-        <span class="story-source">HamHigh</span>
-        <span class="story-date">Fri 10 October 2025</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMilwFBVV95cUxNVk9sbF9RQzBzU3NlckEwRzJMRG51MVNkOUNyaXE3TmhxZ1RidFdSZHdyLVJxX3NackM0TXAzSnBfNHNrT0VTZ1g1djRvR1ktbFBMczJmRmc2YkduWmFQSEZPTC0wTmFqdU1WcDg4bnVtUWZNU2Fhd2xxemZWdGlwdTZYaTdMZU9PcHhJbzRaMEsxRmpWQlhz?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">43</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE5KTVlxN01hN3lSMVRYQ2VDbC00UU9Sa0p1LVFKdDNoaXZQMVV1S0V2X1BEMkw0eTIybXNndVBqNjQ2d0V6M0hxWnZHeXVxUzVkc0xxTEQxRFBDNlJhSGNKSUlaZlh2V1Z1anFxWnZsSDNMd0tfWEw2TVdtMjk?oc=5" target="_blank" rel="noopener noreferrer">Bridget Jones: Mad About The Boy</a></h2>
-      <div class="story-meta">
-        <span class="story-source">The Worldwide Guide To Movie Locations</span>
-        <span class="story-date">Fri 05 September 2025</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMifEFVX3lxTE5KTVlxN01hN3lSMVRYQ2VDbC00UU9Sa0p1LVFKdDNoaXZQMVV1S0V2X1BEMkw0eTIybXNndVBqNjQ2d0V6M0hxWnZHeXVxUzVkc0xxTEQxRFBDNlJhSGNKSUlaZlh2V1Z1anFxWnZsSDNMd0tfWEw2TVdtMjk?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">44</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxNd2VqT1p1Y3FVT0k3QmxnX1htSk5XcEVVd2pqamxMdGthV0dRUGxOXy0tVXNnTGNYQWViR3ZkUHY0MXBJTWpKLWdab1k4b3NfSHVJRlhkQTJhMGhocG1xOVZ2MEppRmRRdElRcDMwYlhHRWVvQm1xV0ltZ3ZzRklvUjkyRnJ6UDZpMmVjUzRzRllSUWRHYWd4Q2hB?oc=5" target="_blank" rel="noopener noreferrer">British Museum seeks consent for estate‑wide fire safety upgrade</a></h2>
-      <div class="story-meta">
-        <span class="story-source">HamHigh</span>
-        <span class="story-date">Sun 05 April 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMimgFBVV95cUxNd2VqT1p1Y3FVT0k3QmxnX1htSk5XcEVVd2pqamxMdGthV0dRUGxOXy0tVXNnTGNYQWViR3ZkUHY0MXBJTWpKLWdab1k4b3NfSHVJRlhkQTJhMGhocG1xOVZ2MEppRmRRdElRcDMwYlhHRWVvQm1xV0ltZ3ZzRklvUjkyRnJ6UDZpMmVjUzRzRllSUWRHYWd4Q2hB?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">45</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxPemNsYVQ5RDJuN1pudHl3YUk2VU1QZ2hFY2lkM1BHSFFmVjZkM3g0X1RFb0lnR2thN2tVcHE0WG0tTUhBV1ZQM0wtSTdLNDNMc19FQnF2eHpxbW5CbmFWSVJXcF94UVUwdlB2UGNBaXNIR2VjZjkwZG1td2k1SDRxcy1xZWFITmN6OFI1US1JMGQzUQ?oc=5" target="_blank" rel="noopener noreferrer">Springwood by Richard Nelson, Hampstead Theatre, Eton Avenue, Swiss Cottage, London NW3 |until 25 July 2026 ⭐⭐⭐⭐ Review by William Russell</a></h2>
-      <div class="story-meta">
-        <span class="story-source">ReviewsGate</span>
-        <span class="story-date">Mon 29 June 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMikgFBVV95cUxPemNsYVQ5RDJuN1pudHl3YUk2VU1QZ2hFY2lkM1BHSFFmVjZkM3g0X1RFb0lnR2thN2tVcHE0WG0tTUhBV1ZQM0wtSTdLNDNMc19FQnF2eHpxbW5CbmFWSVJXcF94UVUwdlB2UGNBaXNIR2VjZjkwZG1td2k1SDRxcy1xZWFITmN6OFI1US1JMGQzUQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
-    <article class="story">
-      <p class="section-label"><span class="story-index">46</span>NW3</p>
-      <h2><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxPSktZOC1QYy12aEppUTloRlpGc1hrVDNNa19JSElmLWRqYVZZWEV2TkRzVkg3Q0J0cHV0RnpzWUROQXRrVkxNZUtKdlV3dVAtVElNdVhGYm1iZFJzbU52NlEwTVE5a2ExWVJrVGY4Z2s3Y2JzeEZ4UVQwS1otSVN2OXVYVG5XdzFxT0RIR9IBjAFBVV95cUxPSktZOC1QYy12aEppUTloRlpGc1hrVDNNa19JSElmLWRqYVZZWEV2TkRzVkg3Q0J0cHV0RnpzWUROQXRrVkxNZUtKdlV3dVAtVElNdVhGYm1iZFJzbU52NlEwTVE5a2ExWVJrVGY4Z2s3Y2JzeEZ4UVQwS1otSVN2OXVYVG5XdzFxT0RIRw?oc=5" target="_blank" rel="noopener noreferrer">The London postcode where buyers can save £232k by moving next door</a></h2>
-      <div class="story-meta">
-        <span class="story-source">My London</span>
-        <span class="story-date">Mon 27 July 2026</span>
-      </div>
-      <div class="source-list">
-        <a class="source-link" href="https://news.google.com/rss/articles/CBMijAFBVV95cUxPSktZOC1QYy12aEppUTloRlpGc1hrVDNNa19JSElmLWRqYVZZWEV2TkRzVkg3Q0J0cHV0RnpzWUROQXRrVkxNZUtKdlV3dVAtVElNdVhGYm1iZFJzbU52NlEwTVE5a2ExWVJrVGY4Z2s3Y2JzeEZ4UVQwS1otSVN2OXVYVG5XdzFxT0RIR9IBjAFBVV95cUxPSktZOC1QYy12aEppUTloRlpGc1hrVDNNa19JSElmLWRqYVZZWEV2TkRzVkg3Q0J0cHV0RnpzWUROQXRrVkxNZUtKdlV3dVAtVElNdVhGYm1iZFJzbU52NlEwTVE5a2ExWVJrVGY4Z2s3Y2JzeEZ4UVQwS1otSVN2OXVYVG5XdzFxT0RIRw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-      </div>
-    </article>
+    <section class="morning" aria-label="Digest summary">
+      <p class="morning-title">This edition</p>
+      <div class="morning-facts">
+        <div class="morning-fact">45<small>New today</small></div>
+        <div class="morning-fact">51<small>Tracked overall</small></div>
+        <div class="morning-fact">0<small>With summaries</small></div>
+        <div class="morning-fact">20:41<small>Updated (UTC)</small></div>
+      </div>
+    </section>
+
+    <section class="briefing" id="today" role="tabpanel" aria-labelledby="tab-today">
+      <article class="story">
+        <p class="section-label"><span class="story-index">01</span>The Heath</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxOX1N4RVVOYld1MnBQV3luNU12ZlVxbElTXzhmX1hBbGlSSHExTURSQjRuWVZpWG1tVVFxcjFRaFNfU3ZacWxjeUt3X0luckxCdjJsZzFyQ0JMcGV0cUhsUEdxT1QtVkg2eHpJZGVnNHNac21ueTBLcGhMXzZPRENZaUJSRXVydGNHSHg2VWRrbUNlVVVCUk9UaUwybVg3NWNCSHRpeW92OW9mbVIz?oc=5" target="_blank" rel="noopener noreferrer">Statement in response to a public paper on future access options at Hampstead Heath Bathing Ponds</a></h2>
+        <div class="story-meta">
+          <span class="story-location">The Heath</span>
+          <span class="action-label">City of London Corporation</span>
+          <span class="story-date">Mon 27 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMirAFBVV95cUxOX1N4RVVOYld1MnBQV3luNU12ZlVxbElTXzhmX1hBbGlSSHExTURSQjRuWVZpWG1tVVFxcjFRaFNfU3ZacWxjeUt3X0luckxCdjJsZzFyQ0JMcGV0cUhsUEdxT1QtVkg2eHpJZGVnNHNac21ueTBLcGhMXzZPRENZaUJSRXVydGNHSHg2VWRrbUNlVVVCUk9UaUwybVg3NWNCSHRpeW92OW9mbVIz?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">02</span>Swiss Cottage</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPaDliVklxcmxqTVNfNmVzR0RGQ2luc2VBMy03NTFxRGxTWEhPcW43ME9RSks5X0tVSGJfQ1lLX2VtV19jS0wzcEJxVGRxeVo0Zks0NGI0dmYtVEN0aENmc0tZdWVLRzB6bWlRbTYtOTRUNmtuOHBwZHBSU3dSaFRtN3BZeXNTOVd3?oc=5" target="_blank" rel="noopener noreferrer">Race to buy historic Ye Olde Swiss Cottage pub after sudden closure</a></h2>
+        <div class="story-meta">
+          <span class="story-location">Swiss Cottage</span>
+          <span class="action-label">London Evening Standard</span>
+          <span class="story-date">Thu 25 September 2025</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPaDliVklxcmxqTVNfNmVzR0RGQ2luc2VBMy03NTFxRGxTWEhPcW43ME9RSks5X0tVSGJfQ1lLX2VtV19jS0wzcEJxVGRxeVo0Zks0NGI0dmYtVEN0aENmc0tZdWVLRzB6bWlRbTYtOTRUNmtuOHBwZHBSU3dSaFRtN3BZeXNTOVd3?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">03</span>Belsize Park</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxPOTk0eFlfcG5HUUI0M2xEeF9UXzJGMi1zWWozV2xMcS15by1rOE1hSk04YVpNaXlWbU1vLWZBa0JwZlYzY1RxX3Z3X2gxdHR2dmY1S0RBd2hLX1p2LVVTWWRuTXdKX3JPRndnWGQtOEFIZHBaZ0dlbl9mUkttdGZQQm9FOVJkTnBOd2VhaW5SVHd1c3FDRnc?oc=5" target="_blank" rel="noopener noreferrer">Mason &amp; Fifth to open fourth London site in Belsize Park</a></h2>
+        <div class="story-meta">
+          <span class="story-location">Belsize Park</span>
+          <span class="action-label">Hotel Owner</span>
+          <span class="story-date">Wed 08 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMilgFBVV95cUxPOTk0eFlfcG5HUUI0M2xEeF9UXzJGMi1zWWozV2xMcS15by1rOE1hSk04YVpNaXlWbU1vLWZBa0JwZlYzY1RxX3Z3X2gxdHR2dmY1S0RBd2hLX1p2LVVTWWRuTXdKX3JPRndnWGQtOEFIZHBaZ0dlbl9mUkttdGZQQm9FOVJkTnBOd2VhaW5SVHd1c3FDRnc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">04</span>Hampstead</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxNd0FlUUdBQXlKZENpUk84Wkk4NDJJczdjbGRHUTJIeVNzTVctZG5Zel9saGJ1QnViM1lhdF9PZzRPNm9yZWlJNkVObEVVZWRtMzlYWmF5aVMwLVVUZU5UM3BELTVzYWJ3TW02QTBBdW15bF9qZ3g4U1lwd3p6M3o4ZEM0UU5rdnpSNUt3dWxhNWV3RFpGX0YwTGZFMnFhWGl4c1owYV80ODhmUXZjWXc?oc=5" target="_blank" rel="noopener noreferrer">Property of the Month: Ariana Grande’s former Hampstead penthouse</a></h2>
+        <div class="story-meta">
+          <span class="story-location">Hampstead</span>
+          <span class="action-label">Luxury London</span>
+          <span class="story-date">Wed 17 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMirgFBVV95cUxNd0FlUUdBQXlKZENpUk84Wkk4NDJJczdjbGRHUTJIeVNzTVctZG5Zel9saGJ1QnViM1lhdF9PZzRPNm9yZWlJNkVObEVVZWRtMzlYWmF5aVMwLVVUZU5UM3BELTVzYWJ3TW02QTBBdW15bF9qZ3g4U1lwd3p6M3o4ZEM0UU5rdnpSNUt3dWxhNWV3RFpGX0YwTGZFMnFhWGl4c1owYV80ODhmUXZjWXc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">05</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE9mXzV0Y1QzWTEydzZicEpmaFBBSmRrVFA2amhjb0pqcng1Z2tobjMtOVo3SjhqRWwyb0FsUHNsbzBjeVgzVEFyNGtSaDBabVhJZ3h0X2RGZG1MZFZtR1RBNWFjLVYtNDFiU1BKM3BRaHhHNjdHeEJn?oc=5" target="_blank" rel="noopener noreferrer">Camden oversees successful prosecution of rogue landlord and agency</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Camden Council</span>
+          <span class="story-date">Fri 20 September 2024</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMid0FVX3lxTE9mXzV0Y1QzWTEydzZicEpmaFBBSmRrVFA2amhjb0pqcng1Z2tobjMtOVo3SjhqRWwyb0FsUHNsbzBjeVgzVEFyNGtSaDBabVhJZ3h0X2RGZG1MZFZtR1RBNWFjLVYtNDFiU1BKM3BRaHhHNjdHeEJn?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">06</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPVndOYzlXWmhxbG1QOFRlRDBDM1NoQy0xOTM4c244bXJhZnBWT1JVTDFjVHctMEVOUXJJWE5aSWpkRDVDTFhUckZDN2tLRnJhWU1vVnoyNG9FSzRSSDhFS0dtNThFem1SQ1pVMHhnMFpKVUd4WjZpZGtVUlhsYmZ1cDlmbHlrZHp2?oc=5" target="_blank" rel="noopener noreferrer">Developer in bid to build rooftop extension to create new flats on top of block</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">London Now</span>
+          <span class="story-date">Sat 09 August 2025</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPVndOYzlXWmhxbG1QOFRlRDBDM1NoQy0xOTM4c244bXJhZnBWT1JVTDFjVHctMEVOUXJJWE5aSWpkRDVDTFhUckZDN2tLRnJhWU1vVnoyNG9FSzRSSDhFS0dtNThFem1SQ1pVMHhnMFpKVUd4WjZpZGtVUlhsYmZ1cDlmbHlrZHp2?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">07</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9DVTBJc3E2SnpRN1ZtWkVSWXh3QmN3ckZ5SlltM3lwa3l4aXlwTjRmUDNYc3lDMGV6RkpOSy0xZ0RwdjRoTTlxdGJOS1NmYmQ0UjFOamJ1N2VvUDA4?oc=5" target="_blank" rel="noopener noreferrer">Keep Hampstead ponds open to trans swimmers, City of London says</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">BBC</span>
+          <span class="story-date">Mon 27 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9DVTBJc3E2SnpRN1ZtWkVSWXh3QmN3ckZ5SlltM3lwa3l4aXlwTjRmUDNYc3lDMGV6RkpOSy0xZ0RwdjRoTTlxdGJOS1NmYmQ0UjFOamJ1N2VvUDA4?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">08</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNZlJVSkF0bDZtRS0zRERyS1VIU01FTDVyMnVNQlVCUFJhaGZoQkhVbVIzZHdNY0hIVFE0WTJjNzhRSDVHYmhmU3ZsQVJSOElWSjJuZl94cjk4T3Y2aDZNdlIxOEVNVW1MV2xfTm12LWVQR2VrTEFVNW1zekhNeFdoTjFjMkdHTG5sbEFnUlZUT01EM1FmcEMtQQ?oc=5" target="_blank" rel="noopener noreferrer">Three London schools shortlisted for World&#x27;s Best School prize – the most of any city in the world</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">standard.co.uk</span>
+          <span class="story-date">Thu 25 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNZlJVSkF0bDZtRS0zRERyS1VIU01FTDVyMnVNQlVCUFJhaGZoQkhVbVIzZHdNY0hIVFE0WTJjNzhRSDVHYmhmU3ZsQVJSOElWSjJuZl94cjk4T3Y2aDZNdlIxOEVNVW1MV2xfTm12LWVQR2VrTEFVNW1zekhNeFdoTjFjMkdHTG5sbEFnUlZUT01EM1FmcEMtQQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">09</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOQzJGamVPeVBaUGFYcXFBNnkzTmN5ZGFpZ2diTGdfODVOdFNYdUJnU0RGTUJHNkpKeHlPWWdRcGp3a3hwSmlMNUE2bVFneTBJWi02cTlseWxCZXpIZWdBS2pSdFMxMk5aY0NPNnRRRVQ4dTlaTVJnSXNrbWZ3eS12NS1uM2xwcTYxSWpR?oc=5" target="_blank" rel="noopener noreferrer">Harry Styles congratulates London school on &#x27;amazing achievement&#x27; as it is shortlisted in global education prize</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">lbc.co.uk</span>
+          <span class="story-date">Thu 25 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxOQzJGamVPeVBaUGFYcXFBNnkzTmN5ZGFpZ2diTGdfODVOdFNYdUJnU0RGTUJHNkpKeHlPWWdRcGp3a3hwSmlMNUE2bVFneTBJWi02cTlseWxCZXpIZWdBS2pSdFMxMk5aY0NPNnRRRVQ4dTlaTVJnSXNrbWZ3eS12NS1uM2xwcTYxSWpR?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">10</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUFtV0FWNVJJRnNJb2dwX1AzNkhwZzFrU1YwN1ZVRmdxSTlWUGhxbEU2N0xncFYtdzJjYWhkWUhia2tuVktjZlZrelVMQW03aWxlSHk3NENkc3pxYXliT21NQzhoN1dBX3RiNzFseDlWTDd4MHdidVJFYldjWFlqNEF4TGRsWURWeUcw?oc=5" target="_blank" rel="noopener noreferrer">The north London cafe that became &#x27;a sanctuary&#x27; for those fleeing Nazi Europe</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">London Now</span>
+          <span class="story-date">Sun 19 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUFtV0FWNVJJRnNJb2dwX1AzNkhwZzFrU1YwN1ZVRmdxSTlWUGhxbEU2N0xncFYtdzJjYWhkWUhia2tuVktjZlZrelVMQW03aWxlSHk3NENkc3pxYXliT21NQzhoN1dBX3RiNzFseDlWTDd4MHdidVJFYldjWFlqNEF4TGRsWURWeUcw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">11</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE1uUHR2UUFNRjFGUFNkREd3Rl9PUk96VlpmTG1xeVJkUUl5dFc1aklhbFo0V2pqMkZaRVR5d1lJekpBOEtmQldCM1lZd2pvRnlpcThLNjVoZC0zYS0zcE9lclRubGZUcFBX?oc=5" target="_blank" rel="noopener noreferrer">Belsize Park Air Quality Index (AQI) and United Kingdom Air Pollution</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">IQAir</span>
+          <span class="story-date">Wed 24 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE1uUHR2UUFNRjFGUFNkREd3Rl9PUk96VlpmTG1xeVJkUUl5dFc1aklhbFo0V2pqMkZaRVR5d1lJekpBOEtmQldCM1lZd2pvRnlpcThLNjVoZC0zYS0zcE9lclRubGZUcFBX?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">12</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE5RaEh6bFpTMWNneXp5TTU2NFBzSHpvZ2xTVnczRkVaVDhPTU45MGhub0phLXlvV3RsY1hHczJ4OFo0UjByS21wXzRaUzN5R2VtbVNLM1RuSzNjUQ?oc=5" target="_blank" rel="noopener noreferrer">When London&#x27;s Hampstead Heath hosted a ski jumping competition</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">BBC</span>
+          <span class="story-date">Sat 03 January 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE5RaEh6bFpTMWNneXp5TTU2NFBzSHpvZ2xTVnczRkVaVDhPTU45MGhub0phLXlvV3RsY1hHczJ4OFo0UjByS21wXzRaUzN5R2VtbVNLM1RuSzNjUQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">13</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxOS1JJVWZ1WVZBSDF4MGdPa01VM3pxc01JekliaXNxekFPMEpSd2RPcm1uMUJ3VVpmTFhXQ3M0emY3aHlzWkw1NkZhRVdTYTZRd0dkdXdfY0E4WUZPNm1LNnVpVlRNLXQ3V0JHWDB1OWlvSnhPRkhoN1NkcldwSWFwbTdXaFFKYWdsNXhUWVVsSDR0a1hQTXM1VEJiZWp0RmFUREZJZ05VYmozU09jblNJLWF3?oc=5" target="_blank" rel="noopener noreferrer">London-based guesthouse Mason &amp; Fifth to launch fourth site in Belsize Park</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Estates Gazette</span>
+          <span class="story-date">Fri 20 February 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMisgFBVV95cUxOS1JJVWZ1WVZBSDF4MGdPa01VM3pxc01JekliaXNxekFPMEpSd2RPcm1uMUJ3VVpmTFhXQ3M0emY3aHlzWkw1NkZhRVdTYTZRd0dkdXdfY0E4WUZPNm1LNnVpVlRNLXQ3V0JHWDB1OWlvSnhPRkhoN1NkcldwSWFwbTdXaFFKYWdsNXhUWVVsSDR0a1hQTXM1VEJiZWp0RmFUREZJZ05VYmozU09jblNJLWF3?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">14</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNS0piNFFJU01MSHhzaTJ6SENkVFZSX0szdmc4blF2NHVNUThBcDB5RlFBbG4tSFVhNnBxRGRvelBEcTZ2dEVUYXc1TFZ2SDJOTm9sOF9OaGhQLXVfT0JPREFTNjNFNko0S0NaODU1b3lkVG5uNDlKZThIdldxRlpMSGtMcHV6VjF3X3hz0gGQAUFVX3lxTE43MlVPZ01WWFhMZHlfQWhxZWJvN01DOV9mNk1YRnRhdDVZZms1dzB6YnQxdWI3SkZ1cnY5cHBNbkRsVUJwSnRYaUU2SXRxV2ZXbEpuOU1SWXo5VWVMYVJ3WGZZQzdRR1FMODZfc0ZOVWxKaE54OHlQRm90WlBtTXY3dU45dkl0dnJlTjNuYlRXeA?oc=5" target="_blank" rel="noopener noreferrer">GMB Union members working in roles from Tower Bridge to Hampstead Heath reject pay offer</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">My London</span>
+          <span class="story-date">Fri 17 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNS0piNFFJU01MSHhzaTJ6SENkVFZSX0szdmc4blF2NHVNUThBcDB5RlFBbG4tSFVhNnBxRGRvelBEcTZ2dEVUYXc1TFZ2SDJOTm9sOF9OaGhQLXVfT0JPREFTNjNFNko0S0NaODU1b3lkVG5uNDlKZThIdldxRlpMSGtMcHV6VjF3X3hz0gGQAUFVX3lxTE43MlVPZ01WWFhMZHlfQWhxZWJvN01DOV9mNk1YRnRhdDVZZms1dzB6YnQxdWI3SkZ1cnY5cHBNbkRsVUJwSnRYaUU2SXRxV2ZXbEpuOU1SWXo5VWVMYVJ3WGZZQzdRR1FMODZfc0ZOVWxKaE54OHlQRm90WlBtTXY3dU45dkl0dnJlTjNuYlRXeA?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">15</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTE9wU1hKX3JFODB0TGxDOERtV0Q4Zkw1My1lRklzZ01RZUhxMWJscC1uSGx1dHBNRk1FZm1QRURpRnZpQlFUeDA0WVFOOTZXRWN0dE5XbjlkUy1rcTY4MWpodFlLNUlodENGY2lfY0dHaXBnWk0tSDczUA?oc=5" target="_blank" rel="noopener noreferrer">Hampstead Heath Ponds to remain inclusive</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Good Law Project</span>
+          <span class="story-date">Thu 29 January 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMieEFVX3lxTE9wU1hKX3JFODB0TGxDOERtV0Q4Zkw1My1lRklzZ01RZUhxMWJscC1uSGx1dHBNRk1FZm1QRURpRnZpQlFUeDA0WVFOOTZXRWN0dE5XbjlkUy1rcTY4MWpodFlLNUlodENGY2lfY0dHaXBnWk0tSDczUA?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">16</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOVWdHNG90RUNpX3VhQUNEMi1fMnhVSU5pTVZMTFNUSXdWV25HbGFHRkFfei1jRE9JcnNiZG5seDRxdHkwbElTNTA0MGd2elNIUWNYejV5TlhLdGlTMEpjWWVUb1A1NEVsTjBjQ1Y3T1FUS3pyak56cnlBODB6cllDby04MzRfeGMycG1VSW5WSnJ5RFl5SjB2cWFOakpnT3JLQkZWRw?oc=5" target="_blank" rel="noopener noreferrer">The row at Hampstead Heath is about far more than a few thoughtless swimmers in a heatwave</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">The Guardian</span>
+          <span class="story-date">Wed 03 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOVWdHNG90RUNpX3VhQUNEMi1fMnhVSU5pTVZMTFNUSXdWV25HbGFHRkFfei1jRE9JcnNiZG5seDRxdHkwbElTNTA0MGd2elNIUWNYejV5TlhLdGlTMEpjWWVUb1A1NEVsTjBjQ1Y3T1FUS3pyak56cnlBODB6cllDby04MzRfeGMycG1VSW5WSnJ5RFl5SjB2cWFOakpnT3JLQkZWRw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">17</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9yNGhzczVTdXQxMmNSZWtPRjRoTVRhOGRYalZxYzluemlneFNVVGZQWll0RXlkR3dfLXR1WUdQT1A4TlE4WVNpaGNEMFpEMGRrMXNzQUdRaFh6WDAw?oc=5" target="_blank" rel="noopener noreferrer">&#x27;Appalling behaviour&#x27; near swans in Hampstead Heath pond criticised</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">BBC</span>
+          <span class="story-date">Wed 27 May 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9yNGhzczVTdXQxMmNSZWtPRjRoTVRhOGRYalZxYzluemlneFNVVGZQWll0RXlkR3dfLXR1WUdQT1A4TlE4WVNpaGNEMFpEMGRrMXNzQUdRaFh6WDAw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">18</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQQ01wNlZDRVVDUWk2WlB6VkxucGNpSUtuanpRbDJMWWVZXzQ5T0Q5QjYxMlVOXzNpejAyMXRsMS1KYnoyeTJHNkdoVnRDMVl0bnBSR0VHem1vOE1CRnBqekd0SjdmN2lZZTlBTEl2aFpGa1BGMURYZ2JjbUVLaUc2aFZpcw?oc=5" target="_blank" rel="noopener noreferrer">One taken to hospital after fight breaks out at Hampstead Heath lido</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">AOL.co.uk</span>
+          <span class="story-date">Fri 24 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQQ01wNlZDRVVDUWk2WlB6VkxucGNpSUtuanpRbDJMWWVZXzQ5T0Q5QjYxMlVOXzNpejAyMXRsMS1KYnoyeTJHNkdoVnRDMVl0bnBSR0VHem1vOE1CRnBqekd0SjdmN2lZZTlBTEl2aFpGa1BGMURYZ2JjbUVLaUc2aFZpcw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">19</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxNUjRkOUQ1M0gyajFLd3RSZmEyX0FSWUxMeThWRExuc2V3Tlgtb0VWWks0U1o2bUxwQ2pJODlxZW1YRGVnNUNVa1NPT3g1eHZOcGpKcUlVZE5PcW5qT296UGV4U3FFaUZoNlJjVUw0U29QaEJ1Y0ZZM1phRjE3Q2xIelFmM2Z4SFBneUgzeWtjOWIzQk8tTlpXcWd2dUJJX3pYU0ZV?oc=5" target="_blank" rel="noopener noreferrer">Aussie cafe chain to finally open on Hampstead Heath next week</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">HamHigh</span>
+          <span class="story-date">Tue 14 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiowFBVV95cUxNUjRkOUQ1M0gyajFLd3RSZmEyX0FSWUxMeThWRExuc2V3Tlgtb0VWWks0U1o2bUxwQ2pJODlxZW1YRGVnNUNVa1NPT3g1eHZOcGpKcUlVZE5PcW5qT296UGV4U3FFaUZoNlJjVUw0U29QaEJ1Y0ZZM1phRjE3Q2xIelFmM2Z4SFBneUgzeWtjOWIzQk8tTlpXcWd2dUJJX3pYU0ZV?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">20</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxNSXM2WHVXbHZiUVA1WmMzYkQzeGpmaGRVenpvdVF5ZUR5TzVONzI1Z1h0Zms4VW11dnZzTTI3Q3NsWVNrZk5STTJMVUhNU1pjejdvWVhRMHVwQnlobl9RbGRWelB3NGZIMU92eWROMVAwb3F1Znl4RU8ta3pmMmsxOHhVLUxjeWM1V3hBYXVCLTRiRGh2MUgyOUlRS2pyMUZDX0x1TE9mWVQwemFSQ195djhtYXpxS3A3cUp3RWVB?oc=5" target="_blank" rel="noopener noreferrer">The Winch cut ties with controversial tower block development in Swiss Cottage</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Camden New Journal</span>
+          <span class="story-date">Fri 09 January 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMivgFBVV95cUxNSXM2WHVXbHZiUVA1WmMzYkQzeGpmaGRVenpvdVF5ZUR5TzVONzI1Z1h0Zms4VW11dnZzTTI3Q3NsWVNrZk5STTJMVUhNU1pjejdvWVhRMHVwQnlobl9RbGRWelB3NGZIMU92eWROMVAwb3F1Znl4RU8ta3pmMmsxOHhVLUxjeWM1V3hBYXVCLTRiRGh2MUgyOUlRS2pyMUZDX0x1TE9mWVQwemFSQ195djhtYXpxS3A3cUp3RWVB?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">21</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE96SjUydEhfOFR1NDN3eUcyVzJNVVoydDE2cmhQeHhVc1FhYzJXX21kWkpPTC02amJHNV83T3htRC1JUXVCWWk4ZHl1N2poQWZ6YTdZNE5ZclE1a2pzcUF6a3BDUTVCdVdzMTNSX0xYQjFSV2RFcl9IanJwU0E?oc=5" target="_blank" rel="noopener noreferrer">Swiss Cottage welcomes the Library of Things</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Camden Council</span>
+          <span class="story-date">Thu 20 November 2025</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMifEFVX3lxTE96SjUydEhfOFR1NDN3eUcyVzJNVVoydDE2cmhQeHhVc1FhYzJXX21kWkpPTC02amJHNV83T3htRC1JUXVCWWk4ZHl1N2poQWZ6YTdZNE5ZclE1a2pzcUF6a3BDUTVCdVdzMTNSX0xYQjFSV2RFcl9IanJwU0E?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">22</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPLWxPZGlFQ0VITGNVdUNBYnVmQ3N0SU5tT0pkanVtT2dmZDFvSW9ldWhvYzQ2Q2dIamxrQl93VElVNlcyRHhWU0plbnE0OEJfVUY1WExUQksyRUVmRk9FYlBLRW5UWlY5dnlfNTdxOG5wSlIxc0tYM0tqb1F1aFV1YjRzZWlxS2xzM3FxNGpMWWdVSG92emhNZlNIVDYxOEpfeTNyX3g5anJoTkFSLW5yMkJFd1pNVE0?oc=5" target="_blank" rel="noopener noreferrer">Appeal for witness to come forward in robbery investigation – London</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">British Transport Police</span>
+          <span class="story-date">Thu 05 February 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMitwFBVV95cUxPLWxPZGlFQ0VITGNVdUNBYnVmQ3N0SU5tT0pkanVtT2dmZDFvSW9ldWhvYzQ2Q2dIamxrQl93VElVNlcyRHhWU0plbnE0OEJfVUY1WExUQksyRUVmRk9FYlBLRW5UWlY5dnlfNTdxOG5wSlIxc0tYM0tqb1F1aFV1YjRzZWlxS2xzM3FxNGpMWWdVSG92emhNZlNIVDYxOEpfeTNyX3g5anJoTkFSLW5yMkJFd1pNVE0?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">23</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNVXBCNGNrc2lUUXVwTzZRcFlzeWNUTy1fUE9xUHIwekFac1BNWDVMZGt2Ulc5ZUdIOUttQXRwcWF4SHhVYWk3TTFyOTRTUUNkVUxrelV0VmhoNVkzQ3QwVEpKU3REWjNiTXZZVkR4UTBWM2dWUHBVQUV3aHNfcXBCaWw4Z3ZkSGQwXy1rYUVQTVFhbUpmbFVWNmQxR1U0YTJ5bmVnS3dHYXBYRmx4dURrVGVjTUEwUkhZLV96Sg?oc=5" target="_blank" rel="noopener noreferrer">News - Dubai-based developer secures £152m loan for 251 homes in north-west London</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Inside Housing Living</span>
+          <span class="story-date">Thu 30 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNVXBCNGNrc2lUUXVwTzZRcFlzeWNUTy1fUE9xUHIwekFac1BNWDVMZGt2Ulc5ZUdIOUttQXRwcWF4SHhVYWk3TTFyOTRTUUNkVUxrelV0VmhoNVkzQ3QwVEpKU3REWjNiTXZZVkR4UTBWM2dWUHBVQUV3aHNfcXBCaWw4Z3ZkSGQwXy1rYUVQTVFhbUpmbFVWNmQxR1U0YTJ5bmVnS3dHYXBYRmx4dURrVGVjTUEwUkhZLV96Sg?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">24</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQQlZRQWQ5bHBjY2ExWmpGNXNsNmRSUDBPOURQUHl4Z09hdXMydld1RkEwYkJockdtSGFCdC1SOE5JMGpHb0o4TUVlYjBucThrZ25CdVBoT0c1QUVaaG9WUW4yOTcwUVJJRmJaUXRWckxraTlQSXF2WU5zNEo0VUQ3RGlRYklPQ1NMTTczSWk1QQ?oc=5" target="_blank" rel="noopener noreferrer">Arada London secures £152m loan to fund Swiss Cottage resi scheme</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">BE News</span>
+          <span class="story-date">Tue 28 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQQlZRQWQ5bHBjY2ExWmpGNXNsNmRSUDBPOURQUHl4Z09hdXMydld1RkEwYkJockdtSGFCdC1SOE5JMGpHb0o4TUVlYjBucThrZ25CdVBoT0c1QUVaaG9WUW4yOTcwUVJJRmJaUXRWckxraTlQSXF2WU5zNEo0VUQ3RGlRYklPQ1NMTTczSWk1QQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">25</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxQejhFY2VJTEx3Y1AwWFBKY3QyeWJBVFBCdnN5ZXNiSzZVNUJkTHpTUUpzRFoyR2xnYzl5Yi1VNl81bGNQY0xoLVFpMURyQ0dSLWNMV09lSS1ucTJzM1Q1YVVRYmtsTTd2UW14TVQtZE5yQ2xVakVNM0tkYVdvTXRTZEhyNjFHZVM4bzdWOGozQ28temtrZUY1aXlfVQ?oc=5" target="_blank" rel="noopener noreferrer">Arada London wins £152m loan to deliver 251 mixed-tenure homes in Swiss Cottage</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Property Week</span>
+          <span class="story-date">Tue 28 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMimwFBVV95cUxQejhFY2VJTEx3Y1AwWFBKY3QyeWJBVFBCdnN5ZXNiSzZVNUJkTHpTUUpzRFoyR2xnYzl5Yi1VNl81bGNQY0xoLVFpMURyQ0dSLWNMV09lSS1ucTJzM1Q1YVVRYmtsTTd2UW14TVQtZE5yQ2xVakVNM0tkYVdvTXRTZEhyNjFHZVM4bzdWOGozQ28temtrZUY1aXlfVQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">26</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSXhPMzlZMHRHQW1OX1p2VlhjMG9YVjd1YzV0alc0NGtXRVAxSUFvellyeThLVWI3SHAtYWJ5R3AwRjRaeWxHZElqbkZGNVI1RGgxNU5oT3B5WTlJRkFTZHpPR2FkYjgxZmI2RTFXXzE2aVFPbmdteU1jNUt3c1pKYklXYTNxMjF6Ukk5cHJqU2xKNjhWcDgxRUlsc25WLVB4VDZpWDktMkZSRGtZTHppcU1XdkQzZFFlSlMyT2VGRU5wMFNDREpJcW5oLUVBNFhqSVZpTmxDdWxMX1FXUHFV?oc=5" target="_blank" rel="noopener noreferrer">The pub that changed me: ‘I bonded with a new group of friends there – and it led to my dream job’</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">The Guardian</span>
+          <span class="story-date">Mon 19 January 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSXhPMzlZMHRHQW1OX1p2VlhjMG9YVjd1YzV0alc0NGtXRVAxSUFvellyeThLVWI3SHAtYWJ5R3AwRjRaeWxHZElqbkZGNVI1RGgxNU5oT3B5WTlJRkFTZHpPR2FkYjgxZmI2RTFXXzE2aVFPbmdteU1jNUt3c1pKYklXYTNxMjF6Ukk5cHJqU2xKNjhWcDgxRUlsc25WLVB4VDZpWDktMkZSRGtZTHppcU1XdkQzZFFlSlMyT2VGRU5wMFNDREpJcW5oLUVBNFhqSVZpTmxDdWxMX1FXUHFV?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">27</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMilAFBVV95cUxQaEN3T3dpY3hrVVQ1QmNoV3g1c09LaXM0cDNGcm9XSDVjZUJUYlVYMkdlTmkwOGViLVN0dmlITlpuT19GUHhlc0xtdjdvUno0MmNRMHp4M1hFMFdlaTFGdnE4TTBTdzZYLW45T0VTR1dCX1VXNThock5DOE9nVDc4dWJvLXdEZkZNWGh3TjJIOGcxYm9j?oc=5" target="_blank" rel="noopener noreferrer">A pub, a plaza and the surprising rich history of Hampstead&#x27;s overlooked neighbour</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">HamHigh</span>
+          <span class="story-date">Sun 21 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMilAFBVV95cUxQaEN3T3dpY3hrVVQ1QmNoV3g1c09LaXM0cDNGcm9XSDVjZUJUYlVYMkdlTmkwOGViLVN0dmlITlpuT19GUHhlc0xtdjdvUno0MmNRMHp4M1hFMFdlaTFGdnE4TTBTdzZYLW45T0VTR1dCX1VXNThock5DOE9nVDc4dWJvLXdEZkZNWGh3TjJIOGcxYm9j?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">28</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOOUxfM0g5U0IzQzBjcHFDSndmZ2FTUHhHSHhiclNFN3VudTlwbEJ5ZGFJRFlzNkg2M1FKYXE0Tnh0TFNVdkVyaEJKNkZYRUljYWZSTElYcmlIQnByMHhpT2lfc09QY0dGd3oyZFN3Nm9hRDBPQlNGdEdncnJ1WUFNYjlkU1d2bkdlRjRGc29KWXM1anhPaVVmb2FoRkN0SlE?oc=5" target="_blank" rel="noopener noreferrer">Falling tiles at London&#x27;s crumbling underground stations</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Camden New Journal</span>
+          <span class="story-date">Thu 19 February 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOOUxfM0g5U0IzQzBjcHFDSndmZ2FTUHhHSHhiclNFN3VudTlwbEJ5ZGFJRFlzNkg2M1FKYXE0Tnh0TFNVdkVyaEJKNkZYRUljYWZSTElYcmlIQnByMHhpT2lfc09QY0dGd3oyZFN3Nm9hRDBPQlNGdEdncnJ1WUFNYjlkU1d2bkdlRjRGc29KWXM1anhPaVVmb2FoRkN0SlE?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">29</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE1VS280RHpuNjhJNlBOZjdlWXlvZS1JYkxjZklJUW83bzBzdkdfMGg1Sjh2MXBSZWI1ZXpNSnp5VDhjZG43aTlWdUhxZ3RuYXN6TlY4cGVxTkZwSXpQVjk0SmF5MHdiLS1EODY4Vk1raXdCSHhfYUZ3UkxoNEpkQQ?oc=5" target="_blank" rel="noopener noreferrer">The upmarket suburb loved by celebrities that&#x27;s named after a French phrase</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">HamHigh</span>
+          <span class="story-date">Fri 10 October 2025</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMifkFVX3lxTE1VS280RHpuNjhJNlBOZjdlWXlvZS1JYkxjZklJUW83bzBzdkdfMGg1Sjh2MXBSZWI1ZXpNSnp5VDhjZG43aTlWdUhxZ3RuYXN6TlY4cGVxTkZwSXpQVjk0SmF5MHdiLS1EODY4Vk1raXdCSHhfYUZ3UkxoNEpkQQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">30</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxNWG5HTTBhdjBUSkFHYkZqWTc3Zk5SdGM2ZlFrbEtTeUNnMFJLZWJEeExCUlNWZFhFTGtLb1F5OHUydEhoWWduemJYc2NmVGh2TjJnVmFoY3RuQnBNTWdqWW9MY0lCc3RVT3lZSXpuRGF2OWIzQ3psRHRndmlVVnBGVFNPRk1hU1p5ZmNiVXliVnk4bFpwWmpralV0RFprWWhuMjU4X2R5ZWNNU3dlSGRRdDJVLUo?oc=5" target="_blank" rel="noopener noreferrer">A Home Away From Home: Inside Mason &amp; Fifth&#x27;s New Belsize Park Guesthouse</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">New Wave Magazine</span>
+          <span class="story-date">Fri 29 May 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMitAFBVV95cUxNWG5HTTBhdjBUSkFHYkZqWTc3Zk5SdGM2ZlFrbEtTeUNnMFJLZWJEeExCUlNWZFhFTGtLb1F5OHUydEhoWWduemJYc2NmVGh2TjJnVmFoY3RuQnBNTWdqWW9MY0lCc3RVT3lZSXpuRGF2OWIzQ3psRHRndmlVVnBGVFNPRk1hU1p5ZmNiVXliVnk4bFpwWmpralV0RFprWWhuMjU4X2R5ZWNNU3dlSGRRdDJVLUo?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">31</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPZV92Yk96UDhRQkFhTW14bERBVHBOM3pCU2lWbjQ2eDlsazJid2tuWDlDNm1OdkdNWFZCVjdYWlF3dWkzUmFwTXl1Qmp6emNiRlJkN2VPLUVyUTkzRHRjSFc3LXcweW9MQ3ZRRkhIT2JHRmFmWHVzQ2ctbWpvRWQteUJ4bjdpYW1hS3JhR3ZBZXVHeENVQzhhU3YzV01FcFd1eDdJ?oc=5" target="_blank" rel="noopener noreferrer">Historic Belsize Park boozer closes but says &#x27;we are moving pubs&#x27;</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">London Now</span>
+          <span class="story-date">Fri 15 May 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiowFBVV95cUxPZV92Yk96UDhRQkFhTW14bERBVHBOM3pCU2lWbjQ2eDlsazJid2tuWDlDNm1OdkdNWFZCVjdYWlF3dWkzUmFwTXl1Qmp6emNiRlJkN2VPLUVyUTkzRHRjSFc3LXcweW9MQ3ZRRkhIT2JHRmFmWHVzQ2ctbWpvRWQteUJ4bjdpYW1hS3JhR3ZBZXVHeENVQzhhU3YzV01FcFd1eDdJ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">32</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE1jTGlpUTNBU1puMmZXM3p2cFg3YkxTU3RIeEh5dzJhTVZvUm41aWIzRUVkRkNMVm05Wm5aTGZiWXp3eUpFa3RkakVobnB3WTgxSHhuT2ctdUNEVXlCQUMxN1BEaGxiZFZiZXFNSGp6b3Y?oc=5" target="_blank" rel="noopener noreferrer">This Brand New Aparthotel in London Raises the Bar for Small Space Design</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Livingetc</span>
+          <span class="story-date">Tue 23 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMicEFVX3lxTE1jTGlpUTNBU1puMmZXM3p2cFg3YkxTU3RIeEh5dzJhTVZvUm41aWIzRUVkRkNMVm05Wm5aTGZiWXp3eUpFa3RkakVobnB3WTgxSHhuT2ctdUNEVXlCQUMxN1BEaGxiZFZiZXFNSGp6b3Y?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">33</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOVHdNVjlCamdJb1ZNQWQ4QjVEc3UzY3BBOUJPaHY0TjN6M3B5VnNBVC1TdHZMMlI4aXlkbi1PVVhfZWVUODdLZWhUVVp2VjBfa0dyNGFNdUU4OGxSamFFMGRXS2czZHctb1JVRWNKdGlWZW0ybmJ3dUhlcUxvVmN6cjFlNkJRcEVlbTBHaGVhWkZTX3RCVmk1bzVOQklnSXNBYmJreUlKWTlpQk4tUUFoTXlPTQ?oc=5" target="_blank" rel="noopener noreferrer">Win a Two-Night Stay at Mason &amp; Fifth Belsize Park With Breakfast and Dinner at Cinder</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">London On The Inside</span>
+          <span class="story-date">Wed 20 May 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOVHdNVjlCamdJb1ZNQWQ4QjVEc3UzY3BBOUJPaHY0TjN6M3B5VnNBVC1TdHZMMlI4aXlkbi1PVVhfZWVUODdLZWhUVVp2VjBfa0dyNGFNdUU4OGxSamFFMGRXS2czZHctb1JVRWNKdGlWZW0ybmJ3dUhlcUxvVmN6cjFlNkJRcEVlbTBHaGVhWkZTX3RCVmk1bzVOQklnSXNBYmJreUlKWTlpQk4tUUFoTXlPTQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">34</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPYmZVUzIxWDczX19vSm1raXdnYlZ2Q2RZNDdadGh4Qk8wT0owQm1LeG5WVTZRQ2RMVkRTeUphU0F5VzY5NDFsb3ZQSTRvaVNZX0hiQkRWNnJJMVQwSjlkRzFla1FMWGJiNV9vTHVQWktjQlpOeVFWRXhjRkJUQU9vRGw5WDNNVWE5UTFybHBybC0?oc=5" target="_blank" rel="noopener noreferrer">Mason &amp; Fifth announces new Belsize Park location</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Hotel Designs</span>
+          <span class="story-date">Fri 17 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMikAFBVV95cUxPYmZVUzIxWDczX19vSm1raXdnYlZ2Q2RZNDdadGh4Qk8wT0owQm1LeG5WVTZRQ2RMVkRTeUphU0F5VzY5NDFsb3ZQSTRvaVNZX0hiQkRWNnJJMVQwSjlkRzFla1FMWGJiNV9vTHVQWktjQlpOeVFWRXhjRkJUQU9vRGw5WDNNVWE5UTFybHBybC0?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">35</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxOd2VlTnczNFJQNjJvNWNDZ2U1ZWlPbVU4U2Y1N3dVXzAycWYySUhpc0t5TVNrcEttcTI1R3I4S3hZVFdCMUZWVU9lakxiYTh2eS1sOEljQzBHekVidS1PN2xsc2JRUDJ5VkJHUUxTZlpETjlPWXoxQlJwb1VuMXctbmViZlNsREXSAYwBQVVfeXFMT0pLWTgtUGMtdmhKaVE5aEZaRnNYa1QzTWtfSUhJZi1kamFWWVhFdk5Ec1ZIN0NCdHB1dEZ6c1lETkF0a1ZMTWVLSnZVd3VQLVRJTXVYRmJtYmRSc21OdjZRME1ROWthMVlSa1RmOGdrN2Nic3hGeFFUMEtaLUlTdjl1WFRuV3cxcU9ESEc?oc=5" target="_blank" rel="noopener noreferrer">The London postcode where buyers can save £232k by moving next door</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">My London</span>
+          <span class="story-date">Mon 27 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMihwFBVV95cUxOd2VlTnczNFJQNjJvNWNDZ2U1ZWlPbVU4U2Y1N3dVXzAycWYySUhpc0t5TVNrcEttcTI1R3I4S3hZVFdCMUZWVU9lakxiYTh2eS1sOEljQzBHekVidS1PN2xsc2JRUDJ5VkJHUUxTZlpETjlPWXoxQlJwb1VuMXctbmViZlNsREXSAYwBQVVfeXFMT0pLWTgtUGMtdmhKaVE5aEZaRnNYa1QzTWtfSUhJZi1kamFWWVhFdk5Ec1ZIN0NCdHB1dEZ6c1lETkF0a1ZMTWVLSnZVd3VQLVRJTXVYRmJtYmRSc21OdjZRME1ROWthMVlSa1RmOGdrN2Nic3hGeFFUMEtaLUlTdjl1WFRuV3cxcU9ESEc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">36</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOWFBQbDlQa3dmQnRiVVN2WEVtbDQzdE0yVTVjYkZqdW1uUUFUX3RncGM3RjlhQ3NQVzhGakU4bGZJUlpFZ0hvTGlzMjlrNS16bFlBRk1PRFZSWldsVmxBMGRteGh1S2dveFZXaW9fMGNjSERKemthekNNcUM4MVpnbU13ak9IS3FpVjRsc0NXUXY?oc=5" target="_blank" rel="noopener noreferrer">Grave of Great War soldier from Hampstead identified</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">GOV.UK</span>
+          <span class="story-date">Fri 24 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOWFBQbDlQa3dmQnRiVVN2WEVtbDQzdE0yVTVjYkZqdW1uUUFUX3RncGM3RjlhQ3NQVzhGakU4bGZJUlpFZ0hvTGlzMjlrNS16bFlBRk1PRFZSWldsVmxBMGRteGh1S2dveFZXaW9fMGNjSERKemthekNNcUM4MVpnbU13ak9IS3FpVjRsc0NXUXY?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">37</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiV0FVX3lxTFBER1NyZTk2ZXY3OExQQkh0ZnlPRzI5ZUh1d21CWm96aGFCcVZsNEZqSXJXQjNOSDc4Mkp2MjFyUTJvSEZRVzF3ZlRvNzY2SUJvc1RVM2xxMA?oc=5" target="_blank" rel="noopener noreferrer">One Day in Hampstead: Hidden Gems in London’s Leafy Village</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">solosophie.com</span>
+          <span class="story-date">Wed 01 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiV0FVX3lxTFBER1NyZTk2ZXY3OExQQkh0ZnlPRzI5ZUh1d21CWm96aGFCcVZsNEZqSXJXQjNOSDc4Mkp2MjFyUTJvSEZRVzF3ZlRvNzY2SUJvc1RVM2xxMA?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">38</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPNVZZVk1LR2w5QlZSeEt3a1k3anNtT3hPOHktc2lQWG5QR1JVaDB1ZkJkRElwTWlYMnNDZE45eXJPb3BtYnQyY05IbkpGRTV6OEQ5VzdFWXI4d2xtUlZaZGpxVFhtRnRQUjNfT3FocWpJNTVuQm9ZM2ZJakJvSFJtOTg0NGRHMVBSWU14LURpbVBMd2FMOVhfY3FBYw?oc=5" target="_blank" rel="noopener noreferrer">LIVE updates as North London road blocked due to building fire</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">London Now</span>
+          <span class="story-date">Fri 24 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPNVZZVk1LR2w5QlZSeEt3a1k3anNtT3hPOHktc2lQWG5QR1JVaDB1ZkJkRElwTWlYMnNDZE45eXJPb3BtYnQyY05IbkpGRTV6OEQ5VzdFWXI4d2xtUlZaZGpxVFhtRnRQUjNfT3FocWpJNTVuQm9ZM2ZJakJvSFJtOTg0NGRHMVBSWU14LURpbVBMd2FMOVhfY3FBYw?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">39</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMi3gFBVV95cUxObnRGWTJWbTJGVEFoVndKUkFOeDRNYlJXUk5pZjNFekhKV2ppTGZUTUMxSVQzMUo5SDdmQW5XQTk0MHdVRlVqVXhHUTgxUEEzWmc4OUxUOEEtTC1ieUh3VEx4UnduZ0RhWmFHQjJ1N2hvMHpBb1Z2LXFVdjU2a0UtY0hsLTQxbXlHZmRkSEdLMDRaejk2ZGxqNUxFWFJzSU8zVkZuemYtUU5pOVRFR3FUZVhpQW5YOGxwMWY4aW1vRUY4TTdHbXh6U1p4WWNzck1wRU16dWduT1RSSWxjQlE?oc=5" target="_blank" rel="noopener noreferrer">Hampstead Heath’s Bathing Ponds to remain trans inclusive spaces as City Corporation agrees future access policy</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">City of London Corporation</span>
+          <span class="story-date">Thu 04 June 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMi3gFBVV95cUxObnRGWTJWbTJGVEFoVndKUkFOeDRNYlJXUk5pZjNFekhKV2ppTGZUTUMxSVQzMUo5SDdmQW5XQTk0MHdVRlVqVXhHUTgxUEEzWmc4OUxUOEEtTC1ieUh3VEx4UnduZ0RhWmFHQjJ1N2hvMHpBb1Z2LXFVdjU2a0UtY0hsLTQxbXlHZmRkSEdLMDRaejk2ZGxqNUxFWFJzSU8zVkZuemYtUU5pOVRFR3FUZVhpQW5YOGxwMWY4aW1vRUY4TTdHbXh6U1p4WWNzck1wRU16dWduT1RSSWxjQlE?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">40</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQYUJ2ZExPLXl1Z3NoYzJzU1E2bHFtV3daZjZ6UHZLS1BsYTFfa2hpV09wdTk3Uk41U1ZwQUxMRzlHem5Ud1F5c0E5NVR3RWhERHNSNWR2SHA4ekllVWdUYU15LWMwcFA4cnVwTC12TzhxU09iQjdYWFg1ekFpcTVCeXZRVXM4OVQw0gGOAUFVX3lxTE13VC0zMXRjNGhPMXpSY3lOT2F5c0phdjVNWGpxc2VGX3ltQ1FMNHBvZmNla0Y3LVRSUS1wTjMybXVvblpoWlJ4WTdSTGFqWFc4c2loX2hZSlRCa2pIZTJsZ0ZPYm5zS0NtbVNmSGI4c3dFSXlvaVF0ZFowNkhBWm5TUWpmY0p3andJZUFvOHc?oc=5" target="_blank" rel="noopener noreferrer">Andy Burnham should show London he cares by funding this one transport project</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">My London</span>
+          <span class="story-date">Sun 26 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQYUJ2ZExPLXl1Z3NoYzJzU1E2bHFtV3daZjZ6UHZLS1BsYTFfa2hpV09wdTk3Uk41U1ZwQUxMRzlHem5Ud1F5c0E5NVR3RWhERHNSNWR2SHA4ekllVWdUYU15LWMwcFA4cnVwTC12TzhxU09iQjdYWFg1ekFpcTVCeXZRVXM4OVQw0gGOAUFVX3lxTE13VC0zMXRjNGhPMXpSY3lOT2F5c0phdjVNWGpxc2VGX3ltQ1FMNHBvZmNla0Y3LVRSUS1wTjMybXVvblpoWlJ4WTdSTGFqWFc4c2loX2hZSlRCa2pIZTJsZ0ZPYm5zS0NtbVNmSGI4c3dFSXlvaVF0ZFowNkhBWm5TUWpmY0p3andJZUFvOHc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">41</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOemo4RDhLVXVHSkhsLWw4RUhieThaVG9DRzF0NEJMMkJxMGU4NDhhcW5YdmFZc1JNM1k0NHdFWkU0VExMQUhEYnVZa0FnS0lSMG16d2dyb01NT3BaY0kwV043ZFdKeWx2NGZBakg4cUJzNVM5aVBvRlFheVlkQnF0bGVKa0U2UkluR210bkctcFdzWXlNR1lpelVOMkt3RlA4U0s1SQ?oc=5" target="_blank" rel="noopener noreferrer">Hampstead Heath – how to escape London without leaving</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">LSE Blogs</span>
+          <span class="story-date">Wed 15 April 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOemo4RDhLVXVHSkhsLWw4RUhieThaVG9DRzF0NEJMMkJxMGU4NDhhcW5YdmFZc1JNM1k0NHdFWkU0VExMQUhEYnVZa0FnS0lSMG16d2dyb01NT3BaY0kwV043ZFdKeWx2NGZBakg4cUJzNVM5aVBvRlFheVlkQnF0bGVKa0U2UkluR210bkctcFdzWXlNR1lpelVOMkt3RlA4U0s1SQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">42</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiogFBVV95cUxQX0JhZ3ZQNTRKSWtHNTdlUGk3YTJSWW9lU28zQzBaQTB6eG1vWnFPbHgzMHh3Q1FWeGh4TXh3WHlzOEtLODhMblJqMURMeHREb3JjWFBDcEVxQkxZVjBOc3NiTVZVc3lFNE1VZENsaFJoWWQxYzMxUGV0b191OVlQWUxsRjVma3ZIcWNJb2FKWEhnN0VldkNPdUFIWGxRaksyS0E?oc=5" target="_blank" rel="noopener noreferrer">Part of Hampstead Heath &#x27;bought using cash linked to slave trade&#x27; - report to reveal</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">HamHigh</span>
+          <span class="story-date">Tue 28 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiogFBVV95cUxQX0JhZ3ZQNTRKSWtHNTdlUGk3YTJSWW9lU28zQzBaQTB6eG1vWnFPbHgzMHh3Q1FWeGh4TXh3WHlzOEtLODhMblJqMURMeHREb3JjWFBDcEVxQkxZVjBOc3NiTVZVc3lFNE1VZENsaFJoWWQxYzMxUGV0b191OVlQWUxsRjVma3ZIcWNJb2FKWEhnN0VldkNPdUFIWGxRaksyS0E?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">43</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxQUVdmVUhQN2dWVEI2ZUh5Z3MyM0hrdWtuYk5GNGRfd3FSZVNvWjFzQ2xXRVV0dmhfSEVoc3RpVWlsclZOU2pEME9GeDVGeUJaYUNxejgwN1UweURTcGdzbGdzT24zV0djb2RPRE4zaVVuUTA1ZjRKNURQZ2NWdXl6RVQ3QWVfbDNwWFcya2dFRjRVblZrX2JlRQ?oc=5" target="_blank" rel="noopener noreferrer">Less Is Margaux | The Natural Hair Group Adds a Third London Salon</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">London On The Inside</span>
+          <span class="story-date">Mon 27 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMimAFBVV95cUxQUVdmVUhQN2dWVEI2ZUh5Z3MyM0hrdWtuYk5GNGRfd3FSZVNvWjFzQ2xXRVV0dmhfSEVoc3RpVWlsclZOU2pEME9GeDVGeUJaYUNxejgwN1UweURTcGdzbGdzT24zV0djb2RPRE4zaVVuUTA1ZjRKNURQZ2NWdXl6RVQ3QWVfbDNwWFcya2dFRjRVblZrX2JlRQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">44</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNRUpsYmtDZDlTNHNVNk1LTmxqVHNUZWVWRzhTNWNDNFJKTHVrZFZwVElWbHY4TU9sbzZmYmdYMURaTXhHQ2tueWdDa3lkVEJqTXhaUzR4UnBCc3pVNWYxWHo3dkZ5RVFaQlotaHp0OFZmT2lxWDdybmVwVzM0a3hnTzc5UTBXUQ?oc=5" target="_blank" rel="noopener noreferrer">London’s Alleys: Holly Bush Steps, NW3</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">ianVisits</span>
+          <span class="story-date">Mon 07 July 2025</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNRUpsYmtDZDlTNHNVNk1LTmxqVHNUZWVWRzhTNWNDNFJKTHVrZFZwVElWbHY4TU9sbzZmYmdYMURaTXhHQ2tueWdDa3lkVEJqTXhaUzR4UnBCc3pVNWYxWHo3dkZ5RVFaQlotaHp0OFZmT2lxWDdybmVwVzM0a3hnTzc5UTBXUQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+      <article class="story">
+        <p class="section-label"><span class="story-index">45</span>NW3</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMidkFVX3lxTE05T1pidkkwWTdnNFRMaHVRcVpwakc5RWVzcWt0X2dfZUVhdHZSR3VteDRYY0p2SlhGXzBFdndPekhBLS03d0tTaXZQVXZTblJ5VkpsRkhGRXVrX3U0ZzdaR3pIdldUX2R5XzdSMFJOM1ExNWY1ZkE?oc=5" target="_blank" rel="noopener noreferrer">Moving to NW3</a></h2>
+        <div class="story-meta">
+          <span class="story-location">NW3</span>
+          <span class="action-label">Zoopla</span>
+          <span class="story-date">Tue 24 January 2017</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMidkFVX3lxTE05T1pidkkwWTdnNFRMaHVRcVpwakc5RWVzcWt0X2dfZUVhdHZSR3VteDRYY0p2SlhGXzBFdndPekhBLS03d0tTaXZQVXZTblJ5VkpsRkhGRXVrX3U0ZzdaR3pIdldUX2R5XzdSMFJOM1ExNWY1ZkE?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="briefing" id="yesterday" role="tabpanel" aria-labelledby="tab-yesterday" hidden>
+      <p class="empty">Nothing collected for this day.</p>
+    </section>
+
+    <section class="briefing" id="day-before" role="tabpanel" aria-labelledby="tab-day-before" hidden>
+      <p class="empty">Nothing collected for this day.</p>
+    </section>
   </main>
 
   <p class="issue-footer">Wednesday 29 July 2026</p>
@@ -748,5 +907,17 @@ main { min-height: 60vh; }
     <p>Generated automatically by a GitHub Actions cron job</p>
   </footer>
 </div>
+<script>
+const tabs = Array.from(document.querySelectorAll(".date-tab"));
+function select(day) {
+  tabs.forEach(tab => {
+    const on = tab.dataset.day === day;
+    tab.setAttribute("aria-selected", on ? "true" : "false");
+    const panel = document.getElementById(tab.dataset.day);
+    if (panel) panel.hidden = !on;
+  });
+}
+tabs.forEach(tab => tab.addEventListener("click", () => select(tab.dataset.day)));
+</script>
 </body>
 </html>
