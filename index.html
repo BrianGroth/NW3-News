@@ -288,8 +288,8 @@ main { min-height: 60vh; }
     <p class="brand">NW3 NEWS</p>
     <p class="issue-line">London <span class="dot">&bull;</span> Thursday 30 July 2026</p>
     <nav class="date-nav" aria-label="Choose briefing date" role="tablist">
-      <button class="date-tab" id="tab-today" role="tab" aria-controls="today" aria-selected="false" data-day="today">Today 30 July</button>
-      <button class="date-tab" id="tab-yesterday" role="tab" aria-controls="yesterday" aria-selected="true" data-day="yesterday">Yesterday</button>
+      <button class="date-tab" id="tab-today" role="tab" aria-controls="today" aria-selected="true" data-day="today">Today 30 July</button>
+      <button class="date-tab" id="tab-yesterday" role="tab" aria-controls="yesterday" aria-selected="false" data-day="yesterday">Yesterday</button>
       <button class="date-tab" id="tab-day-before" role="tab" aria-controls="day-before" aria-selected="false" data-day="day-before">Earlier</button>
     </nav>
   </header>
@@ -298,18 +298,30 @@ main { min-height: 60vh; }
     <section class="morning" aria-label="Digest summary">
       <p class="morning-title">This edition</p>
       <div class="morning-facts">
-        <div class="morning-fact">0<small>New today</small></div>
-        <div class="morning-fact">52<small>Tracked overall</small></div>
+        <div class="morning-fact">1<small>New today</small></div>
+        <div class="morning-fact">53<small>Tracked overall</small></div>
         <div class="morning-fact">0<small>With summaries</small></div>
-        <div class="morning-fact">02:23<small>Updated (UTC)</small></div>
+        <div class="morning-fact">05:41<small>Updated (UTC)</small></div>
       </div>
     </section>
 
-    <section class="briefing" id="today" role="tabpanel" aria-labelledby="tab-today" hidden>
-      <p class="empty">Nothing collected for this day.</p>
+    <section class="briefing" id="today" role="tabpanel" aria-labelledby="tab-today">
+      <article class="story">
+        <p class="section-label"><span class="story-index">01</span>Hampstead</p>
+        <h2><a href="https://news.google.com/rss/articles/CBMiogFBVV95cUxNUHFTX0xpd0hOTV95YlRONVhxc090S2ZvWnc1WmNtWjhoRG5sSnB1WW1CaG01bkJybWs3dThNQTV4MGxTT3YtMTlueXc0bFJEN0dDZ1RfQy1JLW1zX0NpRllwUlJHN295V29xejIwb3ZBMlVubThzY0RSVDI2M0VINHVrMUdyTEpid25kV2VudjVSZ3N2eUNpLTd2bkxLd0d6bmc?oc=5" target="_blank" rel="noopener noreferrer">The hidden Hampstead gem which has been ranked London&#x27;s most popular small park</a></h2>
+        <div class="story-meta">
+          <span class="story-location">Hampstead</span>
+          <span class="action-label">HamHigh</span>
+          <span class="story-date">Wed 22 July 2026</span>
+        </div>
+
+        <div class="source-list">
+          <a class="source-link" href="https://news.google.com/rss/articles/CBMiogFBVV95cUxNUHFTX0xpd0hOTV95YlRONVhxc090S2ZvWnc1WmNtWjhoRG5sSnB1WW1CaG01bkJybWs3dThNQTV4MGxTT3YtMTlueXc0bFJEN0dDZ1RfQy1JLW1zX0NpRllwUlJHN295V29xejIwb3ZBMlVubThzY0RSVDI2M0VINHVrMUdyTEpid25kV2VudjVSZ3N2eUNpLTd2bkxLd0d6bmc?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+      </article>
     </section>
 
-    <section class="briefing" id="yesterday" role="tabpanel" aria-labelledby="tab-yesterday">
+    <section class="briefing" id="yesterday" role="tabpanel" aria-labelledby="tab-yesterday" hidden>
       <article class="story">
         <p class="section-label"><span class="story-index">01</span>The Heath</p>
         <h2><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxPV3J1QnlyeHdBR3FpaVRQZjJfVS14MXlBSjNEbUJJVWFfTkdrWmsxWUxkYklNSXB5T2tJZnhzN2QxVW9LYU0wdHlaaFVjU1hRNUh4cGhkZU0wYk1kc09scHhKY0E0RHRIRWJfeFhSVTdPVnF4U1VUZk1zdG1HX0J4ZHNlb2MxWHoyYkgtanp4bHhmVlU?oc=5" target="_blank" rel="noopener noreferrer">Police intervene after swimmers invade Hampstead Heath pond</a></h2>
@@ -880,19 +892,6 @@ main { min-height: 60vh; }
 
         <div class="source-list">
           <a class="source-link" href="https://news.google.com/rss/articles/CBMimAFBVV95cUxQUVdmVUhQN2dWVEI2ZUh5Z3MyM0hrdWtuYk5GNGRfd3FSZVNvWjFzQ2xXRVV0dmhfSEVoc3RpVWlsclZOU2pEME9GeDVGeUJaYUNxejgwN1UweURTcGdzbGdzT24zV0djb2RPRE4zaVVuUTA1ZjRKNURQZ2NWdXl6RVQ3QWVfbDNwWFcya2dFRjRVblZrX2JlRQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
-        </div>
-      </article>
-      <article class="story">
-        <p class="section-label"><span class="story-index">45</span>NW3</p>
-        <h2><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNRUpsYmtDZDlTNHNVNk1LTmxqVHNUZWVWRzhTNWNDNFJKTHVrZFZwVElWbHY4TU9sbzZmYmdYMURaTXhHQ2tueWdDa3lkVEJqTXhaUzR4UnBCc3pVNWYxWHo3dkZ5RVFaQlotaHp0OFZmT2lxWDdybmVwVzM0a3hnTzc5UTBXUQ?oc=5" target="_blank" rel="noopener noreferrer">London’s Alleys: Holly Bush Steps, NW3</a></h2>
-        <div class="story-meta">
-          <span class="story-location">NW3</span>
-          <span class="action-label">ianVisits</span>
-          <span class="story-date">Mon 07 July 2025</span>
-        </div>
-
-        <div class="source-list">
-          <a class="source-link" href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNRUpsYmtDZDlTNHNVNk1LTmxqVHNUZWVWRzhTNWNDNFJKTHVrZFZwVElWbHY4TU9sbzZmYmdYMURaTXhHQ2tueWdDa3lkVEJqTXhaUzR4UnBCc3pVNWYxWHo3dkZ5RVFaQlotaHp0OFZmT2lxWDdybmVwVzM0a3hnTzc5UTBXUQ?oc=5" target="_blank" rel="noopener noreferrer">Read the story</a>
         </div>
       </article>
     </section>
