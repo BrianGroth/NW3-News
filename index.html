@@ -286,10 +286,10 @@ main { min-height: 60vh; }
 <div class="shell">
   <header class="masthead">
     <p class="brand">NW3 NEWS</p>
-    <p class="issue-line">London <span class="dot">&bull;</span> Wednesday 29 July 2026</p>
+    <p class="issue-line">London <span class="dot">&bull;</span> Thursday 30 July 2026</p>
     <nav class="date-nav" aria-label="Choose briefing date" role="tablist">
-      <button class="date-tab" id="tab-today" role="tab" aria-controls="today" aria-selected="true" data-day="today">Today 29 July</button>
-      <button class="date-tab" id="tab-yesterday" role="tab" aria-controls="yesterday" aria-selected="false" data-day="yesterday">Yesterday</button>
+      <button class="date-tab" id="tab-today" role="tab" aria-controls="today" aria-selected="false" data-day="today">Today 30 July</button>
+      <button class="date-tab" id="tab-yesterday" role="tab" aria-controls="yesterday" aria-selected="true" data-day="yesterday">Yesterday</button>
       <button class="date-tab" id="tab-day-before" role="tab" aria-controls="day-before" aria-selected="false" data-day="day-before">Earlier</button>
     </nav>
   </header>
@@ -298,14 +298,18 @@ main { min-height: 60vh; }
     <section class="morning" aria-label="Digest summary">
       <p class="morning-title">This edition</p>
       <div class="morning-facts">
-        <div class="morning-fact">45<small>New today</small></div>
+        <div class="morning-fact">0<small>New today</small></div>
         <div class="morning-fact">52<small>Tracked overall</small></div>
         <div class="morning-fact">0<small>With summaries</small></div>
-        <div class="morning-fact">22:01<small>Updated (UTC)</small></div>
+        <div class="morning-fact">02:23<small>Updated (UTC)</small></div>
       </div>
     </section>
 
-    <section class="briefing" id="today" role="tabpanel" aria-labelledby="tab-today">
+    <section class="briefing" id="today" role="tabpanel" aria-labelledby="tab-today" hidden>
+      <p class="empty">Nothing collected for this day.</p>
+    </section>
+
+    <section class="briefing" id="yesterday" role="tabpanel" aria-labelledby="tab-yesterday">
       <article class="story">
         <p class="section-label"><span class="story-index">01</span>The Heath</p>
         <h2><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxPV3J1QnlyeHdBR3FpaVRQZjJfVS14MXlBSjNEbUJJVWFfTkdrWmsxWUxkYklNSXB5T2tJZnhzN2QxVW9LYU0wdHlaaFVjU1hRNUh4cGhkZU0wYk1kc09scHhKY0E0RHRIRWJfeFhSVTdPVnF4U1VUZk1zdG1HX0J4ZHNlb2MxWHoyYkgtanp4bHhmVlU?oc=5" target="_blank" rel="noopener noreferrer">Police intervene after swimmers invade Hampstead Heath pond</a></h2>
@@ -893,16 +897,12 @@ main { min-height: 60vh; }
       </article>
     </section>
 
-    <section class="briefing" id="yesterday" role="tabpanel" aria-labelledby="tab-yesterday" hidden>
-      <p class="empty">Nothing collected for this day.</p>
-    </section>
-
     <section class="briefing" id="day-before" role="tabpanel" aria-labelledby="tab-day-before" hidden>
       <p class="empty">Nothing collected for this day.</p>
     </section>
   </main>
 
-  <p class="issue-footer">Wednesday 29 July 2026</p>
+  <p class="issue-footer">Thursday 30 July 2026</p>
   <footer class="site-footer">
     <p>Generated automatically by a GitHub Actions cron job</p>
   </footer>
